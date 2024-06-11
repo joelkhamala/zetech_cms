@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Librarian extends Model
 {
     use HasFactory;
+    public $fillable = [
+        'email',
+        'department_id',
+        'book_title',
+        'book_name',
+        'book_author',
+        'date_borrowed',
+    ];
 }

@@ -5,7 +5,7 @@
 
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Users</h1>
+    <h1 class="h3 mb-0 text-gray-800">Registered Users</h1>
 </div>
 <div class="row mb-4">
     <div class="m-2 justify-content-center">
@@ -109,9 +109,6 @@
                 @endif
             </tbody>
             </table>
-            <div class="d-flex justify-content-center">
-                {{ $users->links('pagination::bootstrap-5') }}
-            </div>
             </div>
         </div>
     </div>

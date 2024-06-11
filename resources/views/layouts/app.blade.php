@@ -60,15 +60,11 @@
                 aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="{{url('login')}}">
                     <i class="fas fa-lock fa-sm fa-fw mr-2 text-dark-800"></i>
-                    Admin
+                    Registrar
                 </a>
                 <a class="dropdown-item" href="{{url('/hodLogin')}}">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-dark-800"></i>
                     HOD
-                </a>
-                <a class="dropdown-item" href="{{url('/registrarLogin')}}">
-                    <i class="fas fa-list-alt fa-sm fa-fw mr-2 text-dark-800"></i>
-                    Registrar
                 </a>
                 <a class="dropdown-item" href="{{url('/financeLogin')}}">
                     <i class="fas fa-credit-card fa-sm fa-fw mr-2 text-dark-800"></i>
@@ -106,14 +102,21 @@
         </main>
     </div>
 
+
     <script>
-        $(document).ready(function() {
-            $('#table').DataTable();
-        } );
+        window.addEventListener('DOMContentLoaded', event => {
+    // Simple-DataTables
+
+    const datatablesSimple = document.getElementById('table');
+    if (datatablesSimple) {
+        new simpleDatatables.DataTable(datatablesSimple);
+    }
+});
     </script>
 
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="js/datatables-simple-demo.js"></script>
 
      <!-- Bootstrap core JavaScript-->
      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

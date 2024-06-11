@@ -27,7 +27,7 @@
                 <div class="row">
                     <div class="col-md-8">
                         <i class="fas fa-graduation-cap"></i>
-                        &nbsp Approved Students
+                        &nbsp Approved Students <span class="font-weight-bold">({{ $studentsApproved->count() }} Record(s) found)</span>
                     </div>
                     <div class="col-md-4 d-flex align-items-center justify-content-center">
                         <form method="GET" action="{{route('students.index')}}" class="form-inline">
@@ -54,7 +54,6 @@
                 <th scope="col">Program</th>
                 <th scope="col">Program Code</th>
                 <th scope="col">Status of Graduation</th>
-                <th scope="col">HOD Remarks</th>
                 <th scope="col-2">Action</th>
                 </tr>
             </thead>
@@ -77,8 +76,19 @@
                             </td>
                             @endif
                         @endforeach
-                    <td>{{$student->status_of_graduation }}</td>
-                    <td>{{$student->HOD_remarks }}</td>
+                    <td>
+                    @if($student->status_of_graduation == 'approved')
+                        <button class="btn btn-success btn-sm">
+                            <i class="fas fa-check"></i>
+                            &nbsp{{ strtoupper($student->status_of_graduation) }}
+                        </button>
+                        @else
+                        <button class="btn btn-danger btn-sm">
+                            <i class="fas fa-times"></i>
+                            &nbsp{{ strtoupper($student->status_of_graduation) }}
+                        </button>
+                        @endif
+                    </td>
                     <td scope="col-2"> 
                         <div class="d-flex juustify-contents-center">
                             <a href="{{route('students.edit', $student->student_id)}}" class="btn btn-info btn-sm">
@@ -100,9 +110,6 @@
                 @endif
             </tbody>
             </table>
-            <div class="d-flex justify-content-center">
-                {{ $studentsApproved->links('pagination::bootstrap-5') }}
-            </div>
             </div>
         </div>
     </div>

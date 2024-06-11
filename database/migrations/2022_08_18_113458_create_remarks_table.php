@@ -14,9 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('remarks', function (Blueprint $table) {
-            $table->id();
+            $table->id('remark_id');
+            $table->string('remark_title');
             $table->string('remark', 1000);
             $table->integer('user_id')->constrained();
+            $table->integer('user_department_id')->constrained();
             $table->string('remark_to');
             $table->string('issue');
             /* For Creating Current Timestamp */

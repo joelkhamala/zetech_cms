@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('status_of_graduation')->default('not approved');
             $table->string('created_by')->default('0');
             $table->string('signed')->default('0');
+            $table->string('password');
             /* For Creating Current Timestamp */
             $table->timestamp('created_at')->useCurrent();
             /* For Updating */

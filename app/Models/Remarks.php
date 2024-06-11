@@ -10,4 +10,13 @@ class Remarks extends Model
     use HasFactory;
 
     protected $primaryKey = 'remark_id';
+
+    protected $fillable = [
+        'remark_title',
+        'user_department_id',
+        'remark',
+        'user_id',
+        'remark_to',
+        'issue',
+    ];
 }

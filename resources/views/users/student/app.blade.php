@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-@if(!empty(Auth::user()->user_name))
+@if(!empty(Auth::user()->email))
 <html lang="en">
 
 <head>
@@ -10,7 +10,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dashboard</title>
+    <link rel="icon" href="{!! asset('images/logo.jpg') !!}"/>
+    <title>{{ config('app.name', 'Zetech University CMS') }} | User Dashboard</title>
 
     <!-- Custom fonts for this template-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -32,7 +33,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url('/registrarHome')}}">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url('/studentHome')}}">
                 <div class="sidebar-brand-icon">
                     <img src="{{url('images/logo.jpg')}}" width="50px" height="50px">
                 </div>
@@ -44,7 +45,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="{{url('/registrarHome')}}">
+                <a class="nav-link" href="{{url('/studentHome')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -59,21 +60,37 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSteps"
+                aria-expanded="true" aria-controls="collapseSteps">
+                    <i class="fas fa-external-link"></i>
+                    <span>Clearance Process</span>
+                </a>
+                <div id="collapseSteps" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Clearance Process</h6>
+                        <a class="collapse-item" href="{{route('clearanceProcess', Auth::User()->email)}}">Clearance Process</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                 aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-comments"></i>
-                    <span>Student List</span>
+                    <i class="fas fa-credit-card"></i>
+                    <span>Fee Payment</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Senate List Details:</h6>
-                        <a class="collapse-item" href="{{url('/viewApprovedStudents')}}">View Approved Students</a>
+                        <h6 class="collapse-header">Fees Payment Details:</h6>
+                        <a class="collapse-item" href="{{url('/feesPayment')}}">Fees Payment</a>
+                        <!-- <a class="collapse-item" href="{{url('/clearanceStatus')}}">Clearance Status</a> -->
                     </div>
                 </div>
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-list-alt"></i>
@@ -84,7 +101,21 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Graduation List:</h6>
                         <a class="collapse-item" href="{{url('/nameConfirmation')}}">Name Confirmation</a>
-                        <a class="collapse-item" href="{{url('/signList')}}">Sign Graduation List</a>
+                    </div>
+                </div>
+            </li> -->
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGown"
+                aria-expanded="true" aria-controls="collapseGown">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Gown Issuance</span>
+                </a>
+                <div id="collapseGown" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Gown Issuance Details:</h6>
+                        <a class="collapse-item" href="{{url('/gownStatus')}}">Gown Status</a>
                     </div>
                 </div>
             </li>
@@ -126,6 +157,74 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
+                        
+                        <!-- Nav Item - Messages -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-envelope fa-fw"></i>
+                                <!-- Counter - Messages -->
+                                <span class="badge badge-danger badge-counter">7</span>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="messagesDropdown">
+                                <h6 class="dropdown-header">
+                                    Message Center
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
+                                            alt="...">
+                                        <div class="status-indicator bg-success"></div>
+                                    </div>
+                                    <div class="font-weight-bold">
+                                        <div class="text-truncate">Hi there! I am wondering if you can help me with a
+                                            problem I've been having.</div>
+                                        <div class="small text-gray-500">Emily Fowler · 58m</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
+                                            alt="...">
+                                        <div class="status-indicator"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">I have the photos that you ordered last month, how
+                                            would you like them sent to you?</div>
+                                        <div class="small text-gray-500">Jae Chun · 1d</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
+                                            alt="...">
+                                        <div class="status-indicator bg-warning"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">Last month's report looks great, I am very happy with
+                                            the progress so far, keep up the good work!</div>
+                                        <div class="small text-gray-500">Morgan Alvarez · 2d</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
+                                            alt="...">
+                                        <div class="status-indicator bg-success"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">Am I a good boy? The reason I ask is because someone
+                                            told me that people say this to all dogs, even if they aren't good...</div>
+                                        <div class="small text-gray-500">Chicken the Dog · 2w</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                            </div>
+                        </li>
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
@@ -220,13 +319,53 @@
         </div>
     </div>
 
+    <script type="text/javascript">
+//         $(document).ready(function() {
+//     $('#table').DataTable(
+        
+//          {     
+
+//       "aLengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+//         "iDisplayLength": 5
+//        } 
+//         );
+// } );
+
+
+window.addEventListener('DOMContentLoaded', event => {
+    // Simple-DataTables
+
+    const datatablesSimple = document.getElementById('table');
+    if (datatablesSimple) {
+        new simpleDatatables.DataTable(datatablesSimple);
+    }
+});
+
+
+function checkAll(bx) {
+  var cbs = document.getElementsByTagName('input');
+  for(var i=0; i < cbs.length; i++) {
+    if(cbs[i].type == 'checkbox') {
+      cbs[i].checked = bx.checked;
+    }
+  }
+}
+    </script>
+
+
+
     <!-- Bootstrap core JavaScript-->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="js/datatables-simple-demo.js"></script>
 <!-- css --> 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
 
     <!-- Core plugin JavaScript-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
@@ -239,23 +378,13 @@
     <!-- Page level custom scripts -->
     <script src="{{url('js/chart-area-demo.js')}}"></script>
     <script src="{{url('js/chart-pie-demo.js')}}"></script>
-
 </body>
 
 </html>
 
 @else
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card alert alert-warning">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    Please login to access the system
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<script>
+    alert('Please login to access the system');
+    history.back();
+</script>
 @endif

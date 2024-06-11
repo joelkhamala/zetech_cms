@@ -8,6 +8,10 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
 use App\Models\Departments;
+use App\Models\Student;
+use App\Models\User;
+use App\Models\Clearance;
+use App\Models\Librarian;
 
 class LoginController extends Controller
 {
@@ -56,21 +60,29 @@ class LoginController extends Controller
         ]);
 
         $departments = Departments::all();
+        $students = Student::all();
+
         if(auth()->attempt(array('email' => $inputVal['email'], 'password' => $inputVal['password'], 'role_id' => $inputVal['role_id']))){
+            User::where('email', $inputVal['email'])
+            ->update([
+                'logged_once' => 1,
+             ]);
+
+
             if (auth()->user()->role_id == 1) {
                 return redirect()->route('home');
             }elseif(auth()->user()->role_id == 2){
-                return redirect()->route('hodHome', compact('departments'));
+                return redirect()->route('hodHome', compact('departments','students'));
             }elseif(auth()->user()->role_id == 3){
-                return redirect()->route('registrarHome');
+                return redirect()->route('registrarHome', compact('departments','students'));
             }elseif(auth()->user()->role_id == 4){
-                return redirect()->route('financeHome');
+                return redirect()->route('financeHome', compact('departments','students'));
             }elseif(auth()->user()->role_id == 5){
-                return redirect()->route('roHome');
+                return redirect()->route('roHome', compact('departments','students'));
             }elseif(auth()->user()->role_id == 6){
-                return redirect()->route('librarianHome');
+                return redirect()->route('librarianHome', compact('departments','students'));
             }elseif(auth()->user()->role_id == 7){
-                return redirect()->route('studentHome');
+                return redirect()->route('studentHome', compact('students'));
             }else{
                 return redirect()->route('/');
             }

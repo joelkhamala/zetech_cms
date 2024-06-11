@@ -20,9 +20,9 @@ class RolesController extends Controller
     public function index(Request $request)
     {
         //
-        $roles = Roles::paginate(5);
+        $roles = Roles::get();
         if($request->has('search')){
-            $roles = Roles::where('role_name','like', "%{$request->search}%")->paginate(5);
+            $roles = Roles::where('role_name','like', "%{$request->search}%")->get();
         }
         return view('roles.index', compact('roles'));
     }

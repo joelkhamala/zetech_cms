@@ -25,22 +25,23 @@
         <div class="card mx-auto">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-md-7">
+                    <div class="col-md-8">
                         <i class="fas fa-graduation-cap"></i>
-                        &nbsp All Candidate Students
+                        &nbsp All Candidate Students <span class="font-weight-bold">({{ $students->count() }} Record(s) Found)</span>
                     </div>
-                    <div class="col-md-5 d-flex align-items-center justify-content-center">
+                    <div class="col-md-4 d-flex align-items-center justify-content-center">
                         <form method="GET" action="{{route('students.index')}}" class="form-inline">
                             @csrf
                             <div class="form-group mx-sm-3 mb-2">
                                 <input type="search" placeholder="Search student" name="search" class="form-control form-control-sm"/>
                             </div>
                             <button type="submit" class="btn btn-primary btn-sm mb-2"><i class="fas fa-search"></i> &nbsp{{ __('Search') }}</button>
-                        </form> &nbsp
+                        </form>
+                        <!-- &nbsp
                         <a href="{{route('students.create')}}" class="btn btn-primary btn-sm mb-2">
                             <i class="fas fa-user-plus"></i>
                             &nbsp <span class="d-none d-lg-inline ">Add New Student</span>
-                        </a>
+                        </a> -->
                     </div>
                 </div>
             </div>
@@ -83,7 +84,23 @@
                             </td>
                             @endif
                         @endforeach
-                    <td>{{$student->status_of_graduation }}</td>
+                    <td>
+                    @if($student->status_of_graduation == 'approved')
+                            <div class="btn btn-success btn-sm">
+                                <i class="fas fa-check"></i>
+                                Approved
+                            </div>
+                        @else
+                        <form method="GET" action="{{ route('students.edit', $student->student_id) }}" class="form-inline">
+                            @csrf
+                            <div class="form-group mx-sm-3">
+                                <input type="hidden" name="approval" value="approved"/>
+                                <input type="hidden" name="student_id" value="{{ $student->student_id }}"/>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm mb-2"><i class="fas fa-thumbs-up"></i> &nbsp{{ __('Approve Student') }}</button>
+                        </form>
+                    @endif
+                    </td>
                     <td scope="col-2"> 
                         <div class="d-flex justify-contents-center">
                             <a href="{{route('students.edit', $student->student_id)}}" class="btn btn-info btn-sm">
@@ -105,9 +122,6 @@
                 @endif
             </tbody>
             </table>
-            </div>
-            <div class="d-flex justify-content-center text-center">
-                {{ $students->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>

@@ -15,9 +15,12 @@ return new class extends Migration
     {
         Schema::create('gowns', function (Blueprint $table) {
             $table->id('gown_id');
+            $table->string('email');
             $table->integer('gown_serial_number');
-            $table->foreignId('program_id')->constrained();
-            $table->string('status');
+            $table->string('condition')->default('good');;
+            $table->string('size')->default('small');
+            $table->string('picked')->default('not picked');
+            $table->string('returned')->default('returned');
             /* For Creating Current Timestamp */
             $table->timestamp('created_at')->useCurrent();
             /* For Updating */

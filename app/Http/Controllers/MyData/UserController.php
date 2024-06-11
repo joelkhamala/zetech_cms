@@ -24,12 +24,12 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::paginate(10);
+        $users = User::get();
         $roles = Roles::all();
         $messages = Messages::all();
         $departments = Departments::all();
         if($request->has('search')){
-            $users = User::where('user_name','like', "%{$request->search}%")->orWhere('email','like', "%{$request->search}%")->paginate(20);
+            $users = User::where('user_name','like', "%{$request->search}%")->orWhere('email','like', "%{$request->search}%")->get();
         }
         return view('users.index', compact('users','messages','roles','departments'));
     }
@@ -86,7 +86,7 @@ class UserController extends Controller
                 'password' => Hash::make($request->password),
             ]);
 
-            return redirect()->route('users.index')->with('message', 'User Successfully Created');
+            return redirect()->route('users.create')->with('message', 'User Successfully Created');
     }
 
     /**
@@ -172,6 +172,15 @@ class UserController extends Controller
         ]);
 
         return redirect()->route('users.index')->with('message', 'User Details Successfully Updated');
+    }
+
+    public function perform()
+    {
+        Session::flush();
+        
+        Auth::logout();
+
+        return redirect('login');
     }
 
     /**

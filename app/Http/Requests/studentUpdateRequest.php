@@ -25,11 +25,11 @@ class studentUpdateRequest extends FormRequest
     {
         return [
             //
-            'user_name' => ['required', 'string', 'max:255', 'unique:users'],
+            'user_name' => ['required', 'string', 'max:255'],
             'first_name' => ['required', 'string', 'max:255'],
             'middle_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255'],
             'national_id' => ['required', 'integer','max:99999999'],
             'phone' => ['required','integer'],
             'guardianPhone' => ['required','integer'],

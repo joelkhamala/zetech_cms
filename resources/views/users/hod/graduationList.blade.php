@@ -25,7 +25,7 @@
         <div class="card mx-auto">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-2">
                         <i class="fas fa-graduation-cap"></i>
                         &nbsp Graduating Students for
                         @foreach($departments as $department)
@@ -36,13 +36,14 @@
                     </div>
                     <div class="col-md-2"></div>
                     <div class="col-md-4">
-                        <form method="GET" action="{{route('users.hod.graduationList', Auth::User()->department_id)}}" class="form-inline">
+                        <form method="GET" action="{{route('users.hod.graduationList', Auth::User()->department_id)}}" class="form-inline float-left">
                             @csrf
                             <div class="form-group mx-sm-3 mb-2">
                                 <input type="search" placeholder="Search student" name="search" class="form-control form-control-sm"/>
                             </div>
                             <button type="submit" class="btn btn-primary btn-sm mb-2"><i class="fas fa-search"></i> &nbsp{{ __('Search') }}</button>
                         </form>
+                        <a href="{{url()->previous()}}" class="float-right btn btn-primary btn-sm"><i class="fas fa-arrow-left"></i> <span class="d-none d-lg-inline">Back</span></a>
                     </div>
                 </div>
             </div>
@@ -55,7 +56,7 @@
                 <th scope="col">First Name</th>
                 <th scope="col">Middle Name</th>
                 <th scope="col">Last Name</th>
-                <th scope="col">Email</th>
+                <th scope="col">Admission Number</th>
                 <th scope="col">National ID</th>
                 <th scope="col">Program</th>
                 <th scope="col">Program Code</th>
@@ -72,7 +73,7 @@
                     <td>{{$student->first_name}}</td>
                     <td>{{$student->middle_name}}</td>
                     <td>{{$student->last_name}}</td>
-                    <td>{{$student->email}}</td>
+                    <td>{{$student->admissionNumber}}</td>
                     <td>{{$student->national_id }}</td>
                         @foreach($programs as $program)
                             @if($student->program_id == $program->program_id)
@@ -84,11 +85,39 @@
                             </td>
                             @endif
                         @endforeach
-                    <td>{{$student->status_of_graduation }}</td>
-                    <td>{{$student->HOD_remarks }}</td>
+                    <td>
+                    @if($student->status_of_graduation == 'approved')
+                        <button class="btn btn-success btn-sm">
+                            <i class="fas fa-check"></i>
+                            &nbsp{{ strtoupper($student->status_of_graduation) }}
+                        </button>
+                        @else
+                        <button class="btn btn-danger btn-sm">
+                            <i class="fas fa-times"></i>
+                            &nbsp{{ strtoupper($student->status_of_graduation) }}
+                        </button>
+                        @endif
+                    </td>
+                    <td>
+                            @if($remarks->isEmpty())
+                                <a href="{{route('users.hod.addRemarks', ['department_id' => Auth::User()->department_id, 'student_id' => $student->student_id])}}" class="btn btn-info btn-sm">Add Remark</a>  
+                            @else
+                                @foreach($remarks as $remark)
+                                    @if($student->student_id == $remark->remark_to)
+                                        {{ $remark = $remark->remark }}<br>
+                                        @if($remark)
+                                            @continue
+                                        @endif
+                                    @else
+                                        <a href="{{route('users.hod.addRemarks', ['department_id' => Auth::User()->department_id, 'student_id' => $student->student_id])}}" class="btn btn-info btn-sm">Add Remark</a><br>  
+                                    @endif
+                                    @continue
+                                @endforeach
+                            @endif
+                    </td>
                     <td scope="col-2"> 
                         <div class="d-flex justify-contents-center">
-                            <a href="{{route('users.hod.addRemarks', ['department_id' => Auth::User()->department_id, 'student_id' => $student->student_id])}}" class="btn btn-info btn-sm">
+                            <a href="{{route('users.hod.viewRemarks', ['department_id' => Auth::User()->department_id, 'student_id' => $student->student_id])}}" class="btn btn-info btn-sm">
                                 <i class="fas fa-commenting"></i>
                             </a> &nbsp
                             <a href="{{url('viewStudent', $student->student_id)}}" class="btn btn-info btn-sm">
@@ -106,9 +135,6 @@
                 @endif
             </tbody>
             </table>
-            <div class="d-flex justify-content-center">
-                {{ $students->links('pagination::bootstrap-5') }}
-            </div>
             </div>
         </div>
     </div>

@@ -127,6 +127,7 @@
                         <div class="col-md-4 mb-3">
                             <label for="department_id" class="col-form-label text-md-end">{{ __('School/Department') }}</label>
 
+                            <input type="hidden" name="role_id" value="{{$roles->role_id}}">
                             <div class="">
                                 <select class="form-control @error('department_id') is-invalid @enderror" name="department_id" required>
                                     <option>--SELECT--</option>
@@ -141,8 +142,6 @@
                                 @enderror
                             </div>
                         </div>
-
-
 
                         <div class="col-md-4 mb-3">
                             <label for="program_id" class="col-form-label text-md-end">{{ __('Program') }}</label>

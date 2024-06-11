@@ -5,7 +5,7 @@
 
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Students</h1>
+    <h1 class="h3 mb-0 text-gray-800">Students System Details</h1>
 </div>
 <div class="row mb-4">
     <div class="justify-content-center mx-auto">
@@ -25,22 +25,23 @@
         <div class="card mx-auto">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-md-7">
+                    <div class="col-md-7 mb-2">
                         <i class="fas fa-list-ol"></i>
-                        &nbsp All Students
+                        &nbsp Students Details <span class="font-weight-bold">({{ $students->count() }} Record(s) found)</span>
                     </div>
                     <div class="col-md-5 d-flex align-items-center justify-content-center">
-                        <form method="GET" action="{{route('students.index')}}" class="form-inline">
+                        <form method="GET" action="{{route('students.index')}}" class="form-inline float-left">
                             @csrf
                             <div class="form-group mx-sm-3 mb-2">
                                 <input type="search" placeholder="Search student" name="search" class="form-control form-control-sm"/>
                             </div>
                             <button type="submit" class="btn btn-primary btn-sm mb-2"><i class="fas fa-search"></i> &nbsp{{ __('Search') }}</button>
                         </form> &nbsp
-                        <a href="{{route('students.create')}}" class="btn btn-primary btn-sm mb-2">
+                        <a href="{{url()->previous()}}" class="float-right btn btn-primary btn-sm mb-2"><i class="fas fa-arrow-left"></i> <span class="d-none d-lg-inline">Back</span></a>
+                        <!-- <a href="{{route('students.create')}}" class="btn btn-primary btn-sm mb-2">
                             <i class="fas fa-user-plus"></i>
                             &nbsp <span class="d-none d-lg-inline ">Add New student</span>
-                        </a>
+                        </a> -->
                     </div>
                 </div>
             </div>
@@ -52,13 +53,10 @@
                 <tr>
                 <th scope="col">Student ID</th>
                 <th scope="col">First Name</th>
-                <th scope="col">Middle Name</th>
                 <th scope="col">Last Name</th>
                 <th scope="col">Email</th>
-                <th scope="col">National ID</th>
-                <th scope="col">Program</th>
-                <th scope="col">Program Code</th>
-                <th scope="col">Status of Graduation</th>
+                <th scope="col">User Name</th>
+                <th scope="col">Admission Number</th>
                 <th scope="col-2">Action</th>
                 </tr>
             </thead>
@@ -67,33 +65,10 @@
                 <tr>
                     <th scope="row">{{$student->student_id}}</th>
                     <td>{{$student->first_name}}</td>
-                    <td>{{$student->middle_name}}</td>
                     <td>{{$student->last_name}}</td>
                     <td>{{$student->email}}</td>
-                    <td>{{$student->national_id }}</td>
-                        @foreach($programs as $program)
-                            @if($student->program_id == $program->program_id)
-                            <td>
-                                {{ $program->program_name }}
-                            </td>
-                            <td>
-                                {{ $program->program_code }}
-                            </td>
-                            @endif
-                        @endforeach
-                    <td>
-                        @if($student->status_of_graduation == 'approved')
-                        <button class="btn btn-success btn-sm">
-                            <i class="fas fa-check"></i>
-                            &nbsp{{ strtoupper($student->status_of_graduation) }}
-                        </button>
-                        @else
-                        <button class="btn btn-danger btn-sm">
-                            <i class="fas fa-times"></i>
-                            &nbsp{{ strtoupper($student->status_of_graduation) }}
-                        </button>
-                        @endif
-                    </td>
+                    <td>{{$student->user_name}}</td>
+                    <td>{{$student->admissionNumber}}</td>
                     <td scope="col-2"> 
                         <div class="d-flex justify-contents-center">
                             <a href="{{route('students.edit', $student->student_id)}}" class="btn btn-info btn-sm">
@@ -115,9 +90,6 @@
                 @endif
             </tbody>
             </table>
-            <div class="d-flex justify-content-center">
-                {{ $students->links('pagination::bootstrap-5') }}
-            </div>
             </div>
         </div>
     </div>

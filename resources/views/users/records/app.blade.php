@@ -62,30 +62,13 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                 aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-comments"></i>
+                    <i class="fas fa-list-ol"></i>
                     <span>Student List</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Senate List Details:</h6>
-                        <a class="collapse-item" href="{{url('/viewApprovedStudents')}}">View Approved Students</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-list-alt"></i>
-                    <span>Graduation List</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Graduation List:</h6>
-                        <a class="collapse-item" href="{{url('/nameConfirmation')}}">Name Confirmation</a>
-                        <a class="collapse-item" href="{{url('/signList')}}">Sign Graduation List</a>
+                        <a class="collapse-item" href="{{url('/clearStudentRecord')}}">Clear Students</a>
                     </div>
                 </div>
             </li>
@@ -133,7 +116,7 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img class="img-profile rounded-circle"
                                     src="{{url('images/undraw_profile.svg')}}">&nbsp 
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->first_name.' '.Auth::user()->last_name }} (<i class="fas fa-address-book-o"></i> Records officer)</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->first_name.' '.Auth::user()->last_name }} (<i class="fas fa-address-book"></i> Records officer)</span>
                                 
                             </a>
                             <!-- Dropdown - User Information -->
@@ -221,13 +204,42 @@
         </div>
     </div>
 
+    <script type="text/javascript">
+        $(document).ready(function() {
+    $('#table').DataTable(
+        
+         {     
+
+      "aLengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+        "iDisplayLength": 5
+       } 
+        );
+} );
+
+
+function checkAll(bx) {
+  var cbs = document.getElementsByTagName('input');
+  for(var i=0; i < cbs.length; i++) {
+    if(cbs[i].type == 'checkbox') {
+      cbs[i].checked = bx.checked;
+    }
+  }
+}
+    </script>
+
+
+
     <!-- Bootstrap core JavaScript-->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 <!-- css --> 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
 
     <!-- Core plugin JavaScript-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>

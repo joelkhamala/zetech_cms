@@ -5,6 +5,18 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Add Users</h1>
 </div>
+<div class="container">
+   @if(session()->has('message'))
+   <div class="container">
+      <div class="alert alert-success alert-dismissible fade show mb-2" role="alert">
+         {{ session('message') }}
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+         </button>
+      </div>
+   </div>
+   @endif
+</div>
 <div class="container mb-4">
     <div class="row justify-content-center">
         <div class="col-md-8">

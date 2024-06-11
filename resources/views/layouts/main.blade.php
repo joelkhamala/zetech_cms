@@ -11,7 +11,7 @@
     <meta name="author" content="">
 
     <link rel="icon" href="{!! asset('images/logo.jpg') !!}"/>
-    <title>{{ config('app.name', 'Zetech University CMS') }} | Admin Dashboard</title>
+    <title>{{ config('app.name', 'Zetech University CMS') }} | Registrar Dashboard</title>
 
     <!-- Custom fonts for this template-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -19,7 +19,8 @@
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
+<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+
 
     <!-- Custom styles for this template-->
     <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
@@ -70,9 +71,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Student List Details:</h6>
-                        <a class="collapse-item" href="{{url('/students/create')}}">Add Students</a>
+                        <!-- <a class="collapse-item" href="{{url('/students/create')}}">Add Students</a> -->
                         <a class="collapse-item" href="{{url('/viewAllStudents')}}">View All Students</a>
-                        <a class="collapse-item" href="{{url('/viewApprovedStudents')}}">View Approved Students</a>
                     </div>
                 </div>
             </li>
@@ -88,8 +88,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Graduation List:</h6>
-                        <a class="collapse-item" href="{{url('/nameConfirmation')}}">Name Confirmation</a>
-                        <a class="collapse-item" href="{{url('/signList')}}">Sign Graduation List</a>
+                        <a class="collapse-item" href="{{url('/viewApprovedStudents')}}">View Approved Students</a>
                     </div>
                 </div>
             </li>
@@ -105,6 +104,8 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Gowns List:</h6>
+                        <a class="collapse-item" href="{{url('/newGowns')}}">Add New Gowns</a>
+                        <a class="collapse-item" href="{{url('/gownsInStore')}}">Gowns in Store</a>
                         <a class="collapse-item" href="{{url('/issuedGowns')}}">Issued Gowns</a>
                         <a class="collapse-item" href="{{url('/returnedGowns')}}">Returned Gowns</a>
                     </div>
@@ -194,98 +195,14 @@
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-                        <!-- Nav Item - Alerts -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
-                            </a>
-                            <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    Alerts Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-file-alt text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">August 12, 2022</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-success">
-                                            <i class="fas fa-donate text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 7, 2019</div>
-                                        $290.29 has been deposited into your account!
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-warning">
-                                            <i class="fas fa-exclamation-triangle text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for your account.
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                            </div>
-                        </li>
-
-                        <!-- Nav Item - Messages -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-envelope fa-fw"></i>
-                                <!-- Counter - Messages -->
-                                <span class="badge badge-danger badge-counter">7</span>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="messagesDropdown">
-                                <h6 class="dropdown-header">
-                                    Message Center
-                                </h6>
-                                <!--Messages from users-->
-                                
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
-                                            alt="...">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div class="font-weight-bold">
-                                        <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                            problem I've been having.</div>
-                                        <div class="small text-gray-500">Emily Fowler · 58m</div>
-                                    </div>
-                                </a>
-                                
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-                            </div>
-                        </li>
-
-                        <div class="topbar-divider d-none d-sm-block"></div>
+                        
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img class="img-profile rounded-circle" src="{{url('images/undraw_profile.svg')}}"> &nbsp
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->first_name.' '.Auth::user()->last_name }} (<i class="fas fa-lock"></i> Admin)</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->first_name.' '.Auth::user()->last_name }} (<i class="fas fa-lock"></i> Registrar)</span>
                                 
                             </a>
                             <!-- Dropdown - User Information -->
@@ -362,7 +279,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session. This will sign you out of the system. Proceed?</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary btn-sm" href="{{ route('logout') }}"
+                    <a class="btn btn-primary btn-sm" href="{{ route('logoutroute') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();" >
                                                      <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -377,17 +294,28 @@
         </div>
         
     </div>
+    
     <script type="text/javascript">
-        $(document).ready(function() {
-    $('#table').DataTable(
+//         $(document).ready(function() {
+//     $('#table').DataTable(
         
-         {     
+//          {     
 
-      "aLengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
-        "iDisplayLength": 5
-       } 
-        );
-} );
+//       "aLengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+//         "iDisplayLength": 5
+//        } 
+//         );
+// } );
+
+
+window.addEventListener('DOMContentLoaded', event => {
+    // Simple-DataTables
+
+    const datatablesSimple = document.getElementById('table');
+    if (datatablesSimple) {
+        new simpleDatatables.DataTable(datatablesSimple);
+    }
+});
 
 
 function checkAll(bx) {
@@ -410,8 +338,9 @@ function checkAll(bx) {
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="js/datatables-simple-demo.js"></script>
 <!-- css --> 
 
     <!-- Core plugin JavaScript-->

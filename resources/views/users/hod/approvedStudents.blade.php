@@ -42,7 +42,7 @@
                 </div>
             </div>
 
-            <div class="card-body">
+             <div class="card-body table-responsive">
             <table class="table table-hover table-stripped table-bordered" " id="table">
             <thead>
                 <tr>
@@ -78,18 +78,37 @@
                             </td>
                             @endif
                         @endforeach
-                    <td>{{$student->status_of_graduation }}</td>
-                    <td>{{$student->HOD_remarks }}</td>
+                    <td>
+                    @if($student->status_of_graduation == 'approved')
+                        <button class="btn btn-success btn-sm">
+                            <i class="fas fa-check"></i>
+                            &nbsp{{ strtoupper($student->status_of_graduation) }}
+                        </button>
+                        @else
+                        <button class="btn btn-danger btn-sm">
+                            <i class="fas fa-times"></i>
+                            &nbsp{{ strtoupper($student->status_of_graduation) }}
+                        </button>
+                        @endif
+                    </td>
+                    <td>
+                    @if($remarks->isEmpty())
+                        No remarks
+                        @endif
+                            @foreach($remarks as $remark)
+                            @if($student->student_id == $remark->remark_to)
+                                {{ $remark->remark }}
+                            @else
+                        No remarks
+                        @break
+                            @endif
+                            @endforeach
+                    </td>
                     <td scope="col-2"> 
                         <div class="d-flex juustify-contents-center">
-                            <a href="{{route('students.edit', $student->student_id)}}" class="btn btn-info btn-sm">
-                                <i class="fas fa-edit"></i>
-                            </a> &nbsp
-                                <form method="POST" action="{{route('students.destroy', $student->student_id)}}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                                </form>
+                            <a href="{{url('viewStudent', $student->student_id)}}" class="btn btn-info btn-sm">
+                                <i class="fas fa-eye"></i>
+                            </a>
                         </div>
                     </td>
                 </tr>
@@ -101,9 +120,6 @@
                 @endif
             </tbody>
             </table>
-            <div class="d-flex justify-content-center">
-                {{ $studentsApproved->links('pagination::bootstrap-5') }}
-            </div>
             </div>
         </div>
     </div>

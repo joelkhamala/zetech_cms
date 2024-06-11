@@ -60,15 +60,16 @@
                     <th scope="row">{{$department->department_id}}</th>
                     <td>{{$department->department_name}}</td>
                     <td scope="col-2">
+                    <div class="d-flex justify-contents-center">
                         <a href="{{route('departments.edit', $department->department_id)}}" class="btn btn-info btn-sm">
-                            <i class="fas fa-edit"></i>
-                            &nbsp Edit Details
+                            <i class="fas fa-edit"></i><span class="d-none d-lg-inline">&nbsp Edit Details</span>
                         </a>&nbsp
                         <form method="POST" action="{{route('departments.destroy', $department->department_id)}}">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                            <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i><span class="d-none d-lg-inline">&nbsp Delete Details</span></button>
                         </form>
+                    </div>
                     </td>
                 </tr>
                 @endforeach
@@ -79,9 +80,6 @@
                 @endif
             </tbody>
             </table>
-            <div class="d-flex justify-content-center">
-                {{ $departments->links('pagination::bootstrap-5') }}
-            </div>
             </div>
         </div>
     </div>

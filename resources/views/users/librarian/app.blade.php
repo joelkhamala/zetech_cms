@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-@if(!empty(Auth::user()->user_name))
+@if(!empty(Auth::user()->email))
 <html lang="en">
 
 <head>
@@ -33,7 +33,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url('/hodHome')}}">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url('/librarianHome')}}">
                 <div class="sidebar-brand-icon">
                     <img src="{{url('images/logo.jpg')}}" width="50px" height="50px">
                 </div>
@@ -45,7 +45,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="{{url('/hodHome')}}">
+                <a class="nav-link" href="{{url('/librarianHome')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -62,30 +62,13 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                 aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-comments"></i>
+                    <i class="fas fa-list-alt"></i>
                     <span>Student List</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Senate List Details:</h6>
-                        <a class="collapse-item" href="{{url('/viewApprovedStudents')}}">View Approved Students</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-list-alt"></i>
-                    <span>Graduation List</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Graduation List:</h6>
-                        <a class="collapse-item" href="{{url('/nameConfirmation')}}">Name Confirmation</a>
-                        <a class="collapse-item" href="{{url('/signList')}}">Sign Graduation List</a>
+                        <a class="collapse-item" href="{{url('/clearApprovedStudents')}}">Clear Approved Students</a>
                     </div>
                 </div>
             </li>
@@ -133,7 +116,7 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img class="img-profile rounded-circle"
                                     src="{{url('images/undraw_profile.svg')}}">&nbsp 
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->first_name.' '.Auth::user()->last_name }}</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->first_name.' '.Auth::user()->last_name }}(<i class="fas fa-user"></i> Librarian)</span>
                                 
                             </a>
                             <!-- Dropdown - User Information -->
@@ -221,13 +204,53 @@
         </div>
     </div>
 
+    <script type="text/javascript">
+//         $(document).ready(function() {
+//     $('#table').DataTable(
+        
+//          {     
+
+//       "aLengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+//         "iDisplayLength": 5
+//        } 
+//         );
+// } );
+
+window.addEventListener('DOMContentLoaded', event => {
+    // Simple-DataTables
+
+    const datatablesSimple = document.getElementById('table');
+    if (datatablesSimple) {
+        new simpleDatatables.DataTable(datatablesSimple);
+    }
+});
+
+
+function checkAll(bx) {
+  var cbs = document.getElementsByTagName('input');
+  for(var i=0; i < cbs.length; i++) {
+    if(cbs[i].type == 'checkbox') {
+      cbs[i].checked = bx.checked;
+    }
+  }
+}
+    </script>
+
+
+
+
     <!-- Bootstrap core JavaScript-->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="js/datatables-simple-demo.js"></script>
 <!-- css --> 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
 
     <!-- Core plugin JavaScript-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
@@ -240,23 +263,13 @@
     <!-- Page level custom scripts -->
     <script src="{{url('js/chart-area-demo.js')}}"></script>
     <script src="{{url('js/chart-pie-demo.js')}}"></script>
-
 </body>
 
 </html>
 
 @else
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card alert alert-warning">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    Please login to access the system
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<script>
+    alert('Please login to access the system');
+    window.location('./');
+</script>
 @endif

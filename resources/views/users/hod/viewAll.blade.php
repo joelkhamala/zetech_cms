@@ -25,24 +25,25 @@
         <div class="card mx-auto">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-2">
                         <i class="fas fa-list-ol"></i>
                         &nbsp All Students
                     </div>
                     <div class="col-md-4"></div>
                     <div class="col-md-4">
-                        <form method="GET" action="{{route('users.hod.viewAll')}}" class="form-inline">
+                        <form method="GET" action="{{route('users.hod.viewAll')}}" class="form-inline float-left">
                             @csrf
                             <div class="form-group mx-sm-3 mb-2">
                                 <input type="search" placeholder="Search student by name" name="search" class="form-control form-control-sm"/>
                             </div>
                             <button type="submit" class="btn btn-primary btn-sm mb-2"><i class="fas fa-search"></i> &nbsp{{ __('Search') }}</button>
                         </form>
+                        <a href="{{url()->previous()}}" class="float-right btn btn-primary btn-sm"><i class="fas fa-arrow-left"></i> <span class="d-none d-lg-inline">Back</span></a>
                     </div>
                 </div>
             </div>
 
-            <div class="card-body">
+            <div class="card-body table-responsive">
             <table class="table table-hover table-stripped table-bordered" " id="table">
             <thead>
                 <tr>
@@ -52,10 +53,9 @@
                 <th scope="col">Last Name</th>
                 <th scope="col">Email</th>
                 <th scope="col">National ID</th>
+                <th scope="col">Admission Number</th>
                 <th scope="col">Program</th>
                 <th scope="col">Program Code</th>
-                <th scope="col">Status of Graduation</th>
-                <th scope="col">HOD Remarks</th>
                 <th scope="col-2">Action</th>
                 </tr>
             </thead>
@@ -68,6 +68,9 @@
                     <td>{{$student->last_name}}</td>
                     <td>{{$student->email}}</td>
                     <td>{{$student->national_id }}</td>
+                    <td>
+                    {{ $student->admissionNumber }}
+                    </td>
                         @foreach($programs as $program)
                             @if($student->program_id == $program->program_id)
                             <td>
@@ -78,8 +81,7 @@
                             </td>
                             @endif
                         @endforeach
-                    <td>{{$student->status_of_graduation }}</td>
-                    <td>{{$student->HOD_remarks }}</td>
+                    
                     <td scope="col-2"> 
                         <div class="d-flex juustify-contents-center">
                             <a href="{{url('viewStudent', $student->student_id)}}" class="btn btn-info btn-sm">
@@ -96,9 +98,6 @@
                 @endif
             </tbody>
             </table>
-            <div class="d-flex justify-content-center">
-                {{ $allStudents->links('pagination::bootstrap-5') }}
-            </div>
             </div>
         </div>
     </div>

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('logged_once')->default('0');
             $table->rememberToken();
             /* For Creating Current Timestamp */
             $table->timestamp('created_at')->useCurrent();

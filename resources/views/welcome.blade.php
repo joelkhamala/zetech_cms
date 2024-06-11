@@ -230,7 +230,7 @@ img {
 margin: 60px auto;
 height: 500px;
 background: #fff;
-/*box-shadow: 10px 10px #ccc,-10px 20px #ddd;*/
+/*box-shadow: 10px 10px #222,-10px 20px #ddd;*/
 }
 .board .nav-tabs {
     position: relative;
@@ -564,15 +564,11 @@ left: 35%;
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="{{url('login')}}">
                                     <i class="fas fa-lock fa-sm fa-fw mr-2 text-dark-800"></i>
-                                    Admin
+                                    Registrar
                                 </a>
                                 <a class="dropdown-item" href="{{url('/hodLogin')}}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-dark-800"></i>
                                     HOD
-                                </a>
-                                <a class="dropdown-item" href="{{url('/registrarLogin')}}">
-                                    <i class="fas fa-list-alt fa-sm fa-fw mr-2 text-dark-800"></i>
-                                    Registrar
                                 </a>
                                 <a class="dropdown-item" href="{{url('/financeLogin')}}">
                                     <i class="fas fa-credit-card fa-sm fa-fw mr-2 text-dark-800"></i>
@@ -607,7 +603,6 @@ left: 35%;
             </div>
             <!-- End of Main Content -->
             <div id="main-carousel" class="carousel slide mt-0" data-ride="carousel">
-
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img src="{{url('images/img1.jpg')}}" class="d-block w-100" alt="...">
@@ -710,12 +705,90 @@ left: 35%;
             </div>
         </section>
 
+        <section class="container-fluid mb-4">
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card shadow">
+                        <div class="card-body p-4">
+                            <h3 class="text-center">About Us</h3>
+                            <p class="text-center m-4">
+                            Zetech University is the premier university for the education of Technology, Science and Business programmes, offering an exceptional learning experience to thousands of youth from Kenya and beyond. With a highly experienced and trained faculty, administrative and support staff members, Zetech provides a great variety of opportunities for individuals with diverse backgrounds.
+                            Zetech University is robustly equipping graduates with skills to invent new technologies for the future. The quality of our education continues to create our reputation for excellence.
+                            At Zetech University, students experience some rare opportunities to prepare for their future careers. As an educational centre to thousands of immensely talented intellectuals, Zetech provides the ideal environment and academic programmes to give students the opportunity to invent and shape the future of our society through meaningful and exciting technological approaches.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
 
         </div>
         <!-- End of Content Wrapper -->
 
     </div>
     <!-- End of Page Wrapper -->
+
+    
+<!--footer starts from here-->
+<footer class="footer">
+<div class="container mt-4">
+<ul class="foote_bottom_ul_amrc">
+<li><a href="/">Home</a></li>
+<li><a href="/about">About</a></li>
+<li><a href="/contact">Contact</a></li>
+</ul>
+<!--foote_bottom_ul_amrc ends here-->
+<p class="text-center">Copyright @ {{ date('Y') }} | Designed With Love by <a href="#">Joel Khamala</a></p>
+
+<ul class="social_footer_ul">
+<li><a href="/"><i class="fab fa-facebook-f"></i></a></li>
+<li><a href="/"><i class="fab fa-twitter"></i></a></li>
+<li><a href="/"><i class="fab fa-linkedin"></i></a></li>
+<li><a href="/"><i class="fab fa-instagram"></i></a></li>
+</ul>
+<!--social_footer_ul ends here-->
+</div>
+
+</footer>
+
+<style>
+    /*footer*/
+.col_white_amrc { color:#FFF;}
+footer { width:100%; background-color:#fff; min-height:250px; padding:10px 0px 25px 0px ;}
+.pt2 { padding-top:40px ; margin-bottom:20px ;}
+footer p { font-size:13px; color:#222; padding-bottom:0px; margin-bottom:8px;}
+.mb10 { padding-bottom:15px ;}
+.footer_ul_amrc { margin:0px ; list-style-type:none ; font-size:14px; padding:0px 0px 10px 0px ; }
+.footer_ul_amrc li {padding:0px 0px 5px 0px;}
+.footer_ul_amrc li a{ color:#222;}
+.footer_ul_amrc li a:hover{ color:#fff; text-decoration:none;}
+.fleft { float:left;}
+.padding-right { padding-right:10px; }
+
+.footer_ul2_amrc {margin:0px; list-style-type:none; padding:0px;}
+.footer_ul2_amrc li p { display:table; }
+.footer_ul2_amrc li a:hover { text-decoration:none;}
+.footer_ul2_amrc li i { margin-top:5px;}
+
+.bottom_border { border-bottom:1px solid #323f45; padding-bottom:20px;}
+.foote_bottom_ul_amrc {
+	list-style-type:none;
+	padding:0px;
+	display:table;
+	margin-top: 10px;
+	margin-right: auto;
+	margin-bottom: 10px;
+	margin-left: auto;
+}
+.foote_bottom_ul_amrc li { display:inline;}
+.foote_bottom_ul_amrc li a { color:#333; margin:0 12px;}
+
+.social_footer_ul { display:table; margin:15px auto 0 auto; list-style-type:none;  }
+.social_footer_ul li { padding-left:20px; padding-top:10px; float:left; }
+.social_footer_ul li a { color:#222; border:1px solid #222; padding:8px;border-radius:50%;}
+.social_footer_ul li i {  width:20px; height:20px; text-align:center;}
+</style>
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">

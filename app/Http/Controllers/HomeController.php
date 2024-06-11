@@ -6,6 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\Departments;
 
 use App\Models\Student;
+use App\Models\Remarks;
+use App\Models\User;
+use App\Models\Roles;
+use App\Models\Program;
+use App\Models\Librarian;
+use App\Models\Clearance;
 
 class HomeController extends Controller
 {
@@ -49,27 +55,62 @@ class HomeController extends Controller
 
     public function registrarindex()
     {
-        return view('users.registrar.home');
+        $remarks=Remarks::all();
+        $students=Student::all();
+        $users=User::all();
+        $roles=Roles::all();
+        $departments=Departments::all();
+        $programs=Program::all();
+        return view('users.registrar.home',compact('students','remarks','users','roles','departments','programs'));
     }
 
     public function financeindex()
     {
-        return view('users.finance.home');
+        $remarks=Remarks::all();
+        $students=Student::all();
+        $users=User::all();
+        $roles=Roles::all();
+        $departments=Departments::all();
+        $programs=Program::all();
+        return view('users.finance.home',compact('students','remarks','users','roles','departments','programs'));
     }
 
     public function roindex()
     {
-        return view('users.records.home');
+        $remarks=Remarks::all();
+        $students=Student::all();
+        $users=User::all();
+        $roles=Roles::all();
+        $departments=Departments::all();
+        $programs=Program::all();
+        return view('users.records.home',compact('students','remarks','users','roles','departments','programs'));
     }
 
     public function libindex()
     {
-        return view('users.librarian.home');
+        $remarks=Remarks::all();
+        $students=Student::all();
+        $users=User::all();
+        $roles=Roles::all();
+        $departments=Departments::all();
+        $programs=Program::all();
+        $clearanceReports = Clearance::where('library','cleared');
+        $clearNots = Clearance::where('library','not cleared');
+        $pendingBooks = Librarian::where('cleared','no');
+        return view('users.librarian.home',compact('students','remarks','users','roles','departments','programs','clearNots','clearanceReports','pendingBooks'));
     }
 
     public function studentindex()
     {
-        return view('users.student.home');
+        $remarks=Remarks::all();
+        $students=Student::all();
+        $users=User::all();
+        $roles=Roles::all();
+        $departments=Departments::all();
+        $programs=Program::all();
+        $books = Librarian::all();
+        $clearances=Clearance::all();
+        return view('users.student.home',compact('students','remarks','clearances','users','roles','departments','programs','books'));
     }
 
 

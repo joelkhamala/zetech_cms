@@ -70,15 +70,17 @@
                             @endif
                         @endforeach
                     </td>
-                    <td scope="col-2">
+                    <td scope="col-2"> 
+                        <div class="d-flex justify-contents-center">
                         <a href="{{route('programs.edit', $program->program_id)}}" class="btn btn-info btn-sm">
-                            <i class="fas fa-edit"></i>
-                        </a>&nbsp
+                                <i class="fas fa-edit"></i>
+                            </a> &nbsp
                         <form method="POST" action="{{route('programs.destroy', $program->program_id)}}">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                        </form>
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                                </form>
+                        </div>
                     </td>
                 </tr>
                 @endforeach
@@ -89,9 +91,6 @@
                 @endif
             </tbody>
             </table>
-            <div class="d-flex justify-content-center">
-                {{ $programs->links('pagination::bootstrap-5') }}
-            </div>
             </div>
         </div>
     </div>

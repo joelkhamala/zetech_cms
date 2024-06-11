@@ -15,8 +15,13 @@ return new class extends Migration
     {
         Schema::create('librarians', function (Blueprint $table) {
             $table->id('librarian_id');
-            $table->string('name');
-            $table->string('title');
+            $table->string('email');
+            $table->string('department_id');
+            $table->string('book_title');
+            $table->string('book_name');
+            $table->string('book_author');
+            $table->string('date_borrowed');
+            $table->string('cleared')->default('no');
             /* For Creating Current Timestamp */
             $table->timestamp('created_at')->useCurrent();
             /* For Updating */

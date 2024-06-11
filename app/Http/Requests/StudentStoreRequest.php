@@ -30,6 +30,7 @@ class StudentStoreRequest extends FormRequest
             'middle_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'role_id'  => ['required', 'integer','max:255'],
             'national_id' => ['required', 'integer','max:99999999'],
             'phone' => ['required','string'],
             'guardianPhone' => ['required','string'],

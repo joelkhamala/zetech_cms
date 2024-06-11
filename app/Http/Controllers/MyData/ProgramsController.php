@@ -21,10 +21,10 @@ class ProgramsController extends Controller
     public function index(Request $request)
     {
         //
-        $programs = Program::paginate(5);
-        $departments = Departments::paginate(5);
+        $programs = Program::get();
+        $departments = Departments::get();
         if($request->has('search')){
-            $programs = Program::where('program_name','like', "%{$request->search}%")->paginate(20);
+            $programs = Program::where('program_name','like', "%{$request->search}%")->get();
         }
         return view('programs.index', compact('programs','departments'));
     }
@@ -37,8 +37,8 @@ class ProgramsController extends Controller
     public function create()
     {
         //
-        $programs = Program::paginate(5);
-        $departments = Departments::paginate(5);
+        $programs = Program::get();
+        $departments = Departments::get();
         return view('programs.create', compact('programs','departments'));
     }
 
@@ -58,7 +58,7 @@ class ProgramsController extends Controller
             'department_id' => $request->department_id,
         ]);
 
-        return redirect()->route('programs.index')->with('message', 'Program Successfully Added');
+        return redirect()->route('programs.create')->with('message', 'Program Successfully Added');
     }
 
     /**
@@ -78,9 +78,12 @@ class ProgramsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Program $program)
     {
         //
+        $programs = Program::get();
+        $departments = Departments::get();
+        return view('programs.edit', compact('program','departments'));
     }
 
     /**
@@ -90,9 +93,16 @@ class ProgramsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $program_id)
     {
         //
+        Program::where('program_id', $program_id)->update([
+            'program_name' => $request->program_name,
+            'program_code' => $request->program_code,
+            'program_type' => $request->program_type,
+            'department_id' => $request->department_id,
+        ]);
+        return redirect()->route('programs.index')->with('message', 'Program Successfully Updated');
     }
 
     /**

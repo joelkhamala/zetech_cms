@@ -25,10 +25,12 @@ class RemarksStoreRequest extends FormRequest
     {
         return [
             //
-            'remark' => ['required', 'string'],
+            'remark' => ['required', 'string', 'max:1000'],
+            'remark_title' =>['required', 'string'],
+            'user_department_id' =>['required', 'string'],
             'user_id' => ['required', 'integer', 'max:255'],
             'remark_to' => ['required', 'integer', 'max:255'],
-            'issue' => ['required', 'string', 'max:1000'],
+            'issue' => ['required', 'string'],
         ];
     }
 }
