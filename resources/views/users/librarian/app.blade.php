@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-@if(!empty(Auth::user()->email))
 <html lang="en">
 
 <head>
@@ -25,7 +24,7 @@
 </head>
 
 <body id="page-top">
-
+@if(!empty(Auth::user()->email))
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -67,8 +66,8 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Senate List Details:</h6>
-                        <a class="collapse-item" href="{{url('/clearApprovedStudents')}}">Clear Approved Students</a>
+                        <h6 class="collapse-header"><i class="fas fa-list-alt"></i>&nbsp Senate List Details:</h6>
+                        <a class="collapse-item" href="{{url('/clearApprovedStudents')}}"><i class="fas fa-list-check" style="margin-left:-10px"></i>&nbsp Clear Approved Students</a>
                     </div>
                 </div>
             </li>
@@ -122,15 +121,6 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
@@ -263,13 +253,11 @@ function checkAll(bx) {
     <!-- Page level custom scripts -->
     <script src="{{url('js/chart-area-demo.js')}}"></script>
     <script src="{{url('js/chart-pie-demo.js')}}"></script>
-</body>
-
-</html>
-
 @else
-<script>
-    alert('Please login to access the system');
-    window.location('./');
-</script>
+    <script>
+    alert("Please Login to access the System");
+    window.location.href="/zetech_cms/public/librarianLogin";
+    </script>
 @endif
+</body>
+</html>

@@ -14,9 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('records_offices', function (Blueprint $table) {
-            $table->id('officer_id');
-            $table->string('name');
-            $table->string('title');
+            $table->id('record_id');
+            $table->string('type_of_file');
+            $table->string('department_id');
+            $table->string('program_id');
+            $table->string('number_of_files');
             /* For Creating Current Timestamp */
             $table->timestamp('created_at')->useCurrent();
             /* For Updating */

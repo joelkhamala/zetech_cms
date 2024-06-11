@@ -11,8 +11,7 @@
                             @endif
                             @endforeach
                         </h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                        
                     </div>
 
                     <!-- Content Row -->
@@ -117,5 +116,47 @@
                             </div>
                         </div>
                     </div>
-                    
+                    <div class="container-fluid mb-4">
+                        <div class="card">
+                            <div class="card-header">
+                            <i class="fas fa-list"></i> &nbspPrograms In your Department
+                            </div>
+                            <div class="card-body table-responsive">
+                            <table class="table table-hover table-stripped table-bordered"  id="table">
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Program Type</th>
+                <th scope="col">Program Name</th>
+                <th scope="col">Program Code</th>
+                </tr>
+            </thead>
+            <tbody>
+                <span style="display:none">
+                    {{$i=1}}
+                </span>
+                @if($programs->count()>0)
+                    @foreach($programs as $program)
+                    @if($program->department_id == Auth::User()->department_id)
+                        <tr>
+                            <th scope="row">{{$i}}</th>
+                            <td>{{ucwords($program->program_type)}}</td>
+                            <td>{{ucwords($program->program_name)}}</td>
+                            <td>{{strtoupper($program->program_code) }}</td>
+                        </tr>
+                        <span style="display:none">
+                            {{$i++}}
+                        </span>
+                        @endif
+                    @endforeach
+                @else
+                    <tr>
+                        <td colspan="11"><div class="alert alert-danger">No Program Record Found</div></td>
+                    </tr>
+                @endif
+            </tbody>
+            </table>
+                            </div>
+                        </div>
+                    </div>
 @endsection

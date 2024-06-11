@@ -2,22 +2,30 @@
 
 @section('content')
 <!-- Page Heading -->
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
+<div class="d-sm-flex align-items-center justify-content-between">
     <h1 class="h3 mb-0 text-gray-800">Add Users</h1>
 </div>
-<div class="container">
-   @if(session()->has('message'))
-   <div class="container">
-      <div class="alert alert-success alert-dismissible fade show mb-2" role="alert">
-         {{ session('message') }}
-         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-         <span aria-hidden="true">&times;</span>
-         </button>
-      </div>
-   </div>
-   @endif
-</div>
 <div class="container mb-4">
+    <div class="mx-auto mb-4 justify-content-center col-md-6 text-center" id="mydiv">
+        <div>
+            @if(session()->has('message'))
+            {{$errclass=''}}
+            <span style="display:none">
+                @if(str_contains(session('message'), 'no'))
+                {{ $errclass='alert-danger'}}
+                @else
+                {{ $errclass='alert-success'}}
+                @endif
+            </span>
+                <div class="alert {{$errclass}} alert-dismissible fade show mb-2" role="alert"  id="mydiv">
+                    {{ session('message') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+        </div>
+    </div>
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -93,7 +101,7 @@
 
                             <div class="col-md-6">
                                 <select class="form-control @error('role_id') is-invalid @enderror" name="role_id" value="{{ old('role_id') }}" required>
-                                    <option>--SELECT--</option>
+                                    <option value="">--SELECT--</option>
                                     @foreach($roles as $role)
                                     <option value="{{$role->role_id}}">{{$role->role_name}}</option>
                                     @endforeach
@@ -111,7 +119,7 @@
 
                             <div class="col-md-6">
                                 <select class="form-control @error('department_id') is-invalid @enderror" name="department_id" required>
-                                    <option>--SELECT--</option>
+                                    <option value="">--SELECT--</option>
                                     @foreach($departments as $department)
                                     <option value="{{ $department->department_id }}">{{$department->department_name}}</option>
                                     @endforeach

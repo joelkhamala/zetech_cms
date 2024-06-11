@@ -8,10 +8,18 @@
     <h1 class="h3 mb-0 text-gray-800">Students Names</h1>
 </div>
 <div class="row mb-4">
-    <div class="justify-content-center mx-auto">
+    <div class="mx-auto justify-content-center col-md-6 text-center" id="mydiv">
         <div>
             @if(session()->has('message'))
-                <div class="alert alert-success alert-dismissible fade show mb-2" student="alert">
+            {{$errclass=''}}
+            <span style="display:none">
+                @if(str_contains(session('message'), 'no'))
+                {{ $errclass='alert-danger'}}
+                @else
+                {{ $errclass='alert-success'}}
+                @endif
+            </span>
+                <div class="alert {{$errclass}} alert-dismissible fade show mb-2" role="alert"  id="mydiv">
                     {{ session('message') }}
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -44,7 +52,7 @@
             </div>
 
             <div class="card-body table-responsive">
-            <table class="table table-hover table-stripped table-bordered" " id="table">
+            <table class="table table-hover table-stripped table-bordered" id="table">
             <thead>
                 <tr>
                 <th scope="col">#</th>
@@ -54,8 +62,9 @@
                 <th scope="col">Department</th>
                 <th scope="col">Program</th>
                 <th scope="col">Program Code</th>
-                <th scope="col">School Fees</th>
-                <th scope="col">Gown Fees</th>
+                <th scope="col">School Fees Balance</th>
+                <th scope="col">Gown Fees Balance</th>
+                <th scope="col">Extra Fees</th>
                 <th scope="col-2">Action</th>
                 </tr>
             </thead>
@@ -89,13 +98,18 @@
                                     </td>
                                     @endif
                                 @endforeach
-                            <td>{{$finance->school_fees }}</td>
-                            <td>{{$finance->gown_fees }}</td>
+                            <td>Kshs. {{number_format($finance->school_fees) }}</td>
+                            <td>Kshs. {{number_format($finance->gown_fees) }}</td>
+                            <td>Kshs. {{number_format($finance->extra_fee) }}</td>
                             <td scope="col-2"> 
                                 <div class="d-flex justify-contents-center">
+                                    @if($finclearances->contains('email', $finance->email))
+                                    <button class="btn btn-success btn-sm"><i class="fas fa-check"></i><span class="d-none d-lg-inline">&nbspStudent Cleared</span></button>
+                                    @else
                                     <a href="{{url('clearViewFinance', $student->student_id)}}" class="btn btn-info btn-sm">
                                         <i class="fas fa-check"></i> <span class="d-none d-lg-inline"> Clear</span>
                                     </a>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

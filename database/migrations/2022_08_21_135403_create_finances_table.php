@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('officer_id')->default('0');
             $table->string('gown_fees')->default('5000');
             $table->string('school_fees')->default('50000');
+            $table->string('extra_fee')->default('0');
             /* For Creating Current Timestamp */
             $table->timestamp('created_at')->useCurrent();
             /* For Updating */

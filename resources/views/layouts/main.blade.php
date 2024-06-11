@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-@if(!empty(Auth::user()->user_name))
 <html lang="en">
 
 <head>
@@ -28,7 +27,7 @@
 </head>
 
 <body id="page-top">
-
+@if(!empty(Auth::user()->user_name))
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -58,7 +57,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Department Data
+                Graduation Data
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
@@ -70,9 +69,9 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Student List Details:</h6>
+                        <h6 class="collapse-header"><i class="fas fa-list-alt"></i> Student List Details:</h6>
                         <!-- <a class="collapse-item" href="{{url('/students/create')}}">Add Students</a> -->
-                        <a class="collapse-item" href="{{url('/viewAllStudents')}}">View All Students</a>
+                        <a class="collapse-item" href="{{url('/viewAllStudents')}}"><i class="fas fa-check"></i> Approve Students</a>
                     </div>
                 </div>
             </li>
@@ -87,8 +86,8 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Graduation List:</h6>
-                        <a class="collapse-item" href="{{url('/viewApprovedStudents')}}">View Approved Students</a>
+                        <h6 class="collapse-header"><i class="fas fa-list-alt"></i> Graduation List:</h6>
+                        <a class="collapse-item" href="{{url('/viewApprovedStudents')}}"><i class="fas fa-list-check" style="margin-left:-10px"></i> View Approved Students</a>
                     </div>
                 </div>
             </li>
@@ -103,11 +102,44 @@
                 <div id="collapseGown" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Gowns List:</h6>
-                        <a class="collapse-item" href="{{url('/newGowns')}}">Add New Gowns</a>
-                        <a class="collapse-item" href="{{url('/gownsInStore')}}">Gowns in Store</a>
-                        <a class="collapse-item" href="{{url('/issuedGowns')}}">Issued Gowns</a>
-                        <a class="collapse-item" href="{{url('/returnedGowns')}}">Returned Gowns</a>
+                        <h6 class="collapse-header"><i class="fas fa-list-alt"></i> Gowns List:</h6>
+                        <a class="collapse-item" href="{{url('/newGowns')}}"><i class="fas fa-plus"></i>&nbsp Add New Gowns</a>
+                        <a class="collapse-item" href="{{url('/gownsInStore')}}"><i class="fas fa-archive"></i>&nbsp  Gowns in Store</a>
+                        <a class="collapse-item" href="{{url('/issuedGowns')}}"><i class="fas fa-share-square"></i>&nbsp  Issued Gowns</a>
+                        <a class="collapse-item" href="{{url('/returnedGowns')}}"><i class="fas fa-retweet"></i>&nbsp  Returned Gowns</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDoc"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-file-text"></i>
+                    <span>Uploaded Documents</span>
+                </a>
+                <div id="collapseDoc" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header"><i class="fas fa-upload"></i> Uploaded Documents:</h6>
+                        <a class="collapse-item" href="{{url('/transcripts')}}"><i class="fas fa-file"></i>&nbsp Transcripts</a>
+                        <a class="collapse-item" href="{{url('/certificates')}}"><i class="fas fa-certificate"></i>&nbsp Certificates</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFinance"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-usd"></i>
+                    <span>Fees Payment</span>
+                </a>
+                <div id="collapseFinance" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header"><i class="fas fa-credit-card-alt"></i> Fees Payments:</h6>
+                        <a class="collapse-item" href="{{url('/feesView')}}"><i class="fas fa-credit-card"></i>&nbsp Fees Payments</a>
                     </div>
                 </div>
             </li>
@@ -120,6 +152,10 @@
                 Addons
             </div>
             -->
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                System Management
+            </div>
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
@@ -279,14 +315,14 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session. This will sign you out of the system. Proceed?</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary btn-sm" href="{{ route('logoutroute') }}"
+                    <a class="btn btn-primary btn-sm" href="#"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();" >
                                                      <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    <form id="logout-form" action="{{ route('logoutroute') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
                 </div>
@@ -354,11 +390,12 @@ function checkAll(bx) {
     <!-- Page level custom scripts -->
     <script src="{{url('js/chart-area-demo.js')}}"></script>
     <script src="{{url('js/chart-pie-demo.js')}}"></script>
-
+@else
+    <script>
+    alert("Please Login to access the System");
+    window.location.href="/zetech_cms/public/login";
+    </script>
+@endif
 </body>
 
 </html>
-
-@else
-<script>window.location = "./";</script>
-@endif

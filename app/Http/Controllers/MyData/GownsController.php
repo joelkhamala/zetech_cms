@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Gowns;
 use App\Models\Clearance;
+use App\Models\Student;
 
 class GownsController extends Controller
 {
@@ -55,7 +56,7 @@ class GownsController extends Controller
             for($i=1;$i<=$request->number_of_gowns;$i++)
             {
                 $serial = rand('100001','999999');
-                $gownCount=Gowns::where('gown_serial_number', $serial)->pluck('gown_serial_number')->first();
+                $gownCount=Gowns::where('gown_serial_number', $serial)->value('gown_serial_number');
                 if($gownCount>0)
                 {
                     continue;
@@ -72,7 +73,7 @@ class GownsController extends Controller
             }
         }
 
-        return redirect()->route('gowns.index')->with('message', 'Gown Successfully Created');
+        return redirect()->route('gowns.index')->with('message', 'Gown Record(s) Successfully Created');
     }
 
     /**
@@ -101,7 +102,7 @@ class GownsController extends Controller
     {
         $gowns = Gowns::where('picked','picked')->get();
         if($request->has('search')){
-            $gowns = Gowns::where('gown_serial_number','like', "%{$request->search}%")->get();
+            $gowns = Gowns::where('gown_serial_number','like', "%{$request->search}%")->orWhere('email','like', "%{$request->search}%")->get();
         }
         return view('gowns.issuedGowns',compact('gowns'));
     }
@@ -109,16 +110,17 @@ class GownsController extends Controller
 
     public function returnedGownsView(Request $request)
     {
-        $gowns = Gowns::where('returned','returned')->get();
+        $gowns = Gowns::where('picked','picked')->where('returned','returned')->get();
         if($request->has('search')){
             $gowns = Gowns::where('gown_serial_number','like', "%{$request->search}%")->get();
         }
         return view('gowns.returnedGowns',compact('gowns'));
     }
 
-    public function selectGownProcess(Request $request, Gowns $gown, Clearance $clear, $gown_id)
+    public function selectGownProcess(Request $request, Gowns $gown, Clearance $clear, Student $student, $gown_id)
     {
-        $gown->where('gown_id', $gown_id)
+        
+       $gown->where('gown_id', $gown_id)
         ->update([
             'email'=>$request->email,
             'picked'=> 'picked',
@@ -128,6 +130,11 @@ class GownsController extends Controller
         $clear->where('email', $request->email)
         ->update([
             'gown'=>'picked'
+        ]);
+
+        $student->where('email', $request->email)
+        ->update([
+            'gown_id' => $gown_id
         ]);
         
         return redirect()->back()->with('message', 'Gown Picked Successfully');

@@ -24,6 +24,8 @@ use App\Models\Librarian;
 use App\Models\Finance;
 use App\Models\FeesData;
 use App\Models\Gowns;
+use App\Models\Transcripts;
+use App\Models\Certificates;
 
 class StudentsController extends Controller
 {
@@ -76,11 +78,12 @@ class StudentsController extends Controller
         $departments = Departments::all();
         $remarks = Remarks::all();
         $programs = Program::all();
+        $depClears = Clearance::where('department','cleared')->get();
         $allStudents = Student::where('confirmed','=', "{$confirmed}")->where('department_id','=',"{$department_id}")->get();
         if($request->has('search')){
             $allStudents = Student::where('confirmed','=', "{$confirmed}")->where('department_id','=',"{$department_id}")->where('first_name','like', "%{$request->search}%")->orWhere('middle_name','like', "%{$request->search}%")->orWhere('last_name','like', "%{$request->search}%")->get();
         }
-        return view('users.hod.nameConfirm', compact('departments','programs','allStudents','remarks'));
+        return view('users.hod.nameConfirm', compact('depClears','departments','programs','allStudents','remarks'));
     }
 
     public function viewAllStudents(Request $request)
@@ -126,10 +129,11 @@ class StudentsController extends Controller
         $programs = Program::all();
         $remarks = Remarks::all();
         $students = Student::where('department_id', '=', "{$department_id}")->get();
+        $depclear = Clearance::where('department','cleared')->get();
         if($request->has('search')){
             $students = Student::where('department_id', '=', "{$department_id}")->where('first_name','like', "%{$request->search}%")->orWhere('middle_name','like', "%{$request->search}%")->orWhere('last_name','like', "%{$request->search}%")->get();
         }
-        return view('users.hod.graduationList', compact('department_id','departments','programs','remarks','students'));
+        return view('users.hod.graduationList', compact('department_id','depclear','departments','programs','remarks','students'));
     }
 
 
@@ -211,7 +215,7 @@ class StudentsController extends Controller
         return view('users.student.clearanceStatus',compact('remarks','libraryClears','financeClears','gownClears','certificateClears'));
     }
 
-    public function graduationStepsShow($student_id)
+    public function graduationStepsShow($email)
     {
         $departments = Departments::all();
         $students = Student::all();
@@ -220,13 +224,17 @@ class StudentsController extends Controller
         $books = Librarian::all();
         $remarks = Remarks::all();
         $gowns = Gowns::where('picked','not picked')->get();
-        $serialNo = Gowns::where('email', $student_id)->pluck('gown_serial_number')->first();
-        $emailGown = Gowns::where('picked','picked')->pluck('email')->first();
-        $libclearances = Clearance::where('library','cleared')->where('email', $student_id)->get();
-        $finclearances = Clearance::where('finance','cleared')->where('email', $student_id)->get();
-        $gownclearances = Clearance::where('gown','picked')->where('email', $student_id)->get();
-        $certclearances = Clearance::where('certTrans','picked')->where('email', $student_id)->get();
-        return view('users.student.clearanceProcess', compact('departments','students','roles','users','books','remarks','libclearances','finclearances','gownclearances','certclearances','gowns','emailGown','serialNo'));
+        $serialNo = Gowns::where('email', $email)->value('gown_serial_number');
+        $emailGown = Gowns::where('picked','picked')->value('email');
+        $depclearances = Clearance::where('department','cleared')->where('email', $email)->get();
+        $libclearances = Clearance::where('library','cleared')->where('email', $email)->get();
+        $finclearances = Clearance::where('finance','cleared')->where('email', $email)->get();
+        $gownclearances = Clearance::where('gown','picked')->where('email', $email)->get();
+        $recordsclearances = Clearance::where('certTrans','picked')->where('email', $email)->get();
+        $recordDetails = Transcripts::where('email', $email)->get();
+        $certificateDetails = Certificates::where('email', $email)->get();
+        $certclearances = Clearance::where('certTrans','picked')->where('email', $email)->get();
+        return view('users.student.clearanceProcess', compact('departments','students','roles','users','books','remarks','depclearances','libclearances','finclearances','gownclearances','certclearances','certificateDetails','gowns','emailGown','serialNo','recordDetails'));
     }
 
     public function feesPaymentView()
@@ -234,8 +242,19 @@ class StudentsController extends Controller
         $finances = Finance::all();
         $feesdata = FeesData::all();
         $totalGrads = FeesData::where('reason','graduation')->sum('amount');
-        $totalTuits = FeesData::where('reason','tuition')->sum('amount');
+        $totalTuits = FeesData::where('reason','tuition');
         return view('users.student.feesPayment', compact('finances','feesdata','totalGrads','totalTuits'));
+    }
+
+    public function clearStudentDeptProcess(Clearance $clear, $student_id)
+    {
+        $email=Student::where('student_id', $student_id)->value('email');
+        $clear->where('email', $email)
+        ->update([
+            'department' => 'cleared'
+        ]);
+
+        return redirect()->back()->with('message', 'Student Cleared Successfully');
     }
     
 

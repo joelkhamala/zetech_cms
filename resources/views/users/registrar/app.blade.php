@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-@if(!empty(Auth::user()->email))
+
 <html lang="en">
 
 <head>
@@ -25,7 +25,7 @@
 </head>
 
 <body id="page-top">
-
+@if(!empty(Auth::user()->email))
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -269,13 +269,11 @@ function checkAll(bx) {
     <!-- Page level custom scripts -->
     <script src="{{url('js/chart-area-demo.js')}}"></script>
     <script src="{{url('js/chart-pie-demo.js')}}"></script>
-</body>
-
-</html>
-
 @else
-<script>
-    alert('Please login to access the system');
-    history.back();
-</script>
+    <script>
+    alert("Please Login to access the System");
+    window.location.href="/zetech_cms/public/login";
+    </script>
 @endif
+</body>
+</html>

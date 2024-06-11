@@ -12,6 +12,8 @@ use App\Models\Roles;
 use App\Models\Program;
 use App\Models\Librarian;
 use App\Models\Clearance;
+use App\Models\Finance;
+use App\Models\FeesData;
 
 class HomeController extends Controller
 {
@@ -48,9 +50,10 @@ class HomeController extends Controller
     public function hodindex()
     {
         $departments = Departments::all();
+        $programs = Program::all();
         $students = Student::all();
         $approved = Student::where('status_of_graduation','=','approved');
-        return view('users.hod.home', compact('departments','students','approved'));
+        return view('users.hod.home', compact('departments','students','approved','programs'));
     }
 
     public function registrarindex()
@@ -72,7 +75,9 @@ class HomeController extends Controller
         $roles=Roles::all();
         $departments=Departments::all();
         $programs=Program::all();
-        return view('users.finance.home',compact('students','remarks','users','roles','departments','programs'));
+        $fees=FeesData::all()->sum('amount');
+        $feesData=FeesData::all();
+        return view('users.finance.home',compact('feesData','students','remarks','users','roles','departments','programs','fees'));
     }
 
     public function roindex()
@@ -110,7 +115,8 @@ class HomeController extends Controller
         $programs=Program::all();
         $books = Librarian::all();
         $clearances=Clearance::all();
-        return view('users.student.home',compact('students','remarks','clearances','users','roles','departments','programs','books'));
+        $finances=Finance::all();
+        return view('users.student.home',compact('students','remarks','finances','clearances','users','roles','departments','programs','books'));
     }
 
 

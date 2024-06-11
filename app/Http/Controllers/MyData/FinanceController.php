@@ -18,6 +18,7 @@ use App\Models\Remarks;
 use App\Models\Clearance;
 use App\Models\Librarian;
 use App\Models\Finance;
+use App\Models\FeesData;
 
 class FinanceController extends Controller
 {
@@ -34,9 +35,10 @@ class FinanceController extends Controller
         $finances = Finance::all();
         $students = Student::where('status_of_graduation','approved')->get();
         $clearances = Clearance::where('library','cleared')->get();
+        $finclearances = Clearance::where('finance','cleared')->get();
         $programs = Program::all();
         $departments = Departments::all();
-        return view('users.finance.viewFinanceDetails', compact('finances','students','programs','departments','clearances'));
+        return view('users.finance.viewFinanceDetails', compact('finclearances','finances','students','programs','departments','clearances'));
     }
 
 

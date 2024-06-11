@@ -7,18 +7,26 @@
 </div>
 <div class="container-fluid mb-4">
    <div class="row justify-content-center">
-      <div class="justify-content-center mx-auto col-md-8 text-center">
-         <div>
+      <div class="mx-auto justify-content-center col-md-6 text-center" id="mydiv">
+        <div>
             @if(session()->has('message'))
-            <div class="alert alert-success alert-dismissible fade show mb-2" student="alert">
-               {{ session('message') }}
-               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-               <span aria-hidden="true">&times;</span>
-               </button>
-            </div>
+            {{$errclass=''}}
+            <span style="display:none">
+                @if(str_contains(session('message'), 'no'))
+                {{ $errclass='alert-danger'}}
+                @else
+                {{ $errclass='alert-success'}}
+                @endif
+            </span>
+                <div class="alert {{$errclass}} alert-dismissible fade show mb-2" role="alert"  id="mydiv">
+                    {{ session('message') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
             @endif
-         </div>
-      </div>
+        </div>
+    </div>
       <div class="col-md-12 mb-4">
          <div class="card shadow-sm">
             <div class="text-center mt-2">
@@ -28,10 +36,11 @@
                <table class="table table-bordered">
                   <thead>
                      <tr>
-                        <th scope="col">Full Names</th>
+                        <th scope="col">Name</th>
                         <th scope="col">School Fees Balance</th>
                         <th scope="col">Gown Fees Balance</th>
                         <th scope="col">Total Fees Balance</th>
+                        <th scope="col">Extra Fees</th>
                         <th scope="col">Action</th>
                      </tr>
                   </thead>
@@ -44,12 +53,13 @@
                         <td>Kshs. {{number_format($finance->school_fees) }}</td>
                         <td>Kshs. {{number_format($finance->gown_fees) }}</td>
                         <td><b>Kshs. {{number_format($finance->gown_fees + $finance->school_fees) }}</b></td>
+                        <td>Kshs. {{number_format($finance->extra_fee) }}</td>
                         <td><button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#exampleModal{{Auth::User()->email}}" data-whatever="{{Auth::User()->email}}"><i class="fas fa-eye"></i><span class="d-none d-lg-inline"> &nbspView Finance Statement</span></button></td>
                      </tr>
                      <tr>
-                        <td colspan="5" class="text-center">
+                        <td colspan="6" class="text-center">
                            @if(($finance->gown_fees + $finance->school_fees)>0)
-                           <div class="btn btn-info"><i class="fas fa-info-circle"></i> &nbsp You have to clear all Fees arrears in order to Be Cleared by the Finance Officer</div>
+                           <div class="btn btn-info"><i class="fas fa-info-circle"></i> &nbsp You have to clear all Fees arrears in order to Be Cleared for Graduation</div>
                            @else
                            <div class="btn btn-success"><i class="fas fa-info-circle"></i> &nbsp You have cleared all Fees arrears hence can be cleared for Graduation</div>
                            @endif
@@ -59,7 +69,7 @@
                      @endforeach
                      @else
                      <tr>
-                        <td colspan="11">
+                        <td colspan="6">
                            <div class="alert alert-danger">No Record Found</div>
                         </td>
                      </tr>
@@ -99,14 +109,14 @@
                               <td>{{$feedata->code }}</td>
                               <td>{{$feedata->created_at }}</td>
                            </tr>
+                           <span style="display:none">
+                              {{$totals[] = $feedata->amount}}
+                           </span>
                            @endif
                            @endforeach
                            <tr>
                               <th>TOTALS</th>
-                              <th>Tuition:<br>Kshs. {{number_format($totalTuits) }}</th>
-                              <th>Graduation:<br>Kshs. {{number_format($totalGrads) }}</th>
-                              <th>Overall Total<br>Kshs. {{number_format($totalTuits + $totalGrads) }}</th>
-                              <th>#</th>
+                              <th colspan="4"><span class="text-center">Kshs. {{number_format(array_sum($totals)) }}</span></th>
                            </tr>
                            @else
                            <tr>
@@ -152,7 +162,7 @@
                         <label for="reason" class="col-form-label text-md-end">{{ __('Payment For') }}</label>
                         <div class="">
                            <select id="reason" class="form-control @error('reason') is-invalid @enderror" name="reason" required autofocus>
-                              <option>--Select--</option>
+                              <option value="">--Select--</option>
                               <option value="tuition">Tuition Fees</option>
                               <option value="graduation">Graduation Fees</option>
                            </select>

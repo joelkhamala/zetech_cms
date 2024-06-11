@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-@if(!empty(Auth::user()->email))
 <html lang="en">
 
 <head>
@@ -25,7 +24,7 @@
 </head>
 
 <body id="page-top">
-
+@if(!empty(Auth::user()->email))
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -58,22 +57,6 @@
                 Department Data
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-list-ol"></i>
-                    <span>Student List</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Student List Details:</h6>
-                        <a class="collapse-item" href="{{url('/viewAll')}}">View All Students</a>
-                        <a class="collapse-item" href="{{url('/approvedStudents')}}">View Approved Students</a>
-                    </div>
-                </div>
-            </li>
-
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
@@ -84,17 +67,33 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Graduation List:</h6>
-                        <a class="collapse-item" href="{{route('users.hod.createList', Auth::user()->department_id)}}">Prepare Graduation List</a>
-                        <a class="collapse-item" href="{{route('users.hod.graduationList', Auth::user()->department_id)}}">Graduation List</a>
-                        <a class="collapse-item" href="{{route('users.hod.nameConfirm', Auth::user()->department_id)}}">Name Confirmation</a>
-                        <a class="collapse-item" href="{{url('/signList')}}">Sign Graduation List</a>
+                        <h6 class="collapse-header"><i class="fas fa-list"></i>&nbsp Graduation List:</h6>
+                        <a class="collapse-item" href="{{route('users.hod.createList', Auth::user()->department_id)}}"><i class="fas fa-list-check" style="margin-left:-10px;"></i>&nbsp Prepare Graduation List</a>
+                        <a class="collapse-item" href="{{route('users.hod.graduationList', Auth::user()->department_id)}}"><i class="fas fa-list-ol" style="margin-left:-10px;"></i>&nbsp Graduation List</a>
+                        <a class="collapse-item" href="{{route('users.hod.nameConfirm', Auth::user()->department_id)}}"><i class="fas fa-check" style="margin-left:-10px;"></i>&nbsp Name Confirmation</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-list-ol"></i>
+                    <span>Student List</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Student List Details:</h6>
+                        <a class="collapse-item" href="{{url('/viewAll')}}"><i class="fas fa-eye" style="margin-left:-10px;"></i>&nbsp View All Students</a>
+                        <a class="collapse-item" href="{{url('/approvedStudents')}}"><i class="fas fa-list-check" style="margin-left:-10px;"></i>&nbsp View Approved Students</a>
                     </div>
                 </div>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
+
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
@@ -142,15 +141,6 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
@@ -284,14 +274,12 @@ window.addEventListener('DOMContentLoaded', event => {
     <!-- Page level custom scripts -->
     <script src="{{url('js/chart-area-demo.js')}}"></script>
     <script src="{{url('js/chart-pie-demo.js')}}"></script>
-
+@else
+    <script>
+    alert("Please Login to access the System");
+    window.location.href="/zetech_cms/public/hodLogin";
+    </script>
+@endif
 </body>
 
 </html>
-
-@else
-<script>
-    alert('Please login to access the system');
-    history.back();
-</script>
-@endif

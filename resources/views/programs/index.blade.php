@@ -8,10 +8,18 @@
     <h1 class="h3 mb-0 text-gray-800">Programs</h1>
 </div>
 <div class="row mb-4">
-    <div class="justify-content-center mx-auto">
+    <div class="mx-auto justify-content-center col-md-6 text-center">
         <div>
             @if(session()->has('message'))
-                <div class="alert alert-success alert-dismissible fade show mb-2" role="alert">
+            {{$errclass=''}}
+            <span style="display:none">
+                @if(str_contains(session('message'), 'not'))
+                {{ $errclass='alert-danger'}}
+                @else
+                {{ $errclass='alert-success'}}
+                @endif
+            </span>
+                <div class="alert {{$errclass}} alert-dismissible fade show mb-2" role="alert">
                     {{ session('message') }}
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>

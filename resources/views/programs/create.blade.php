@@ -7,16 +7,24 @@
 </div>
 <div class="container mb-4">
 <div class="container text-center">
-   @if(session()->has('message'))
-   <div class="container">
-      <div class="alert alert-success alert-dismissible fade show mb-2" role="alert">
-         {{ session('message') }}
-         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-         <span aria-hidden="true">&times;</span>
-         </button>
-      </div>
-   </div>
-   @endif
+@if(session()->has('message'))
+    {{$errclass=''}}
+    <span style="display:none">
+        @if(str_contains(session('message'), 'no'))
+        {{ $errclass='alert-danger'}}
+        @else
+        {{ $errclass='alert-success'}}
+        @endif
+    </span>
+    <div class="container">
+        <div class="alert {{$errclass}} alert-dismissible fade show mb-2" role="alert">
+            {{ session('message') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+    @endif
 </div>
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -24,7 +32,10 @@
                 <div class="card-header">
                     <i class="fas fa-plus-circle"></i>
                     {{ __('Add New Program') }}
-                    <a href="{{url()->previous()}}" class="float-right btn btn-primary btn-sm"><i class="fas fa-arrow-left"></i> Go Back</a>
+                    <div class="float-right">
+                        <a href="{{url('programs')}}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i> View Programs</a>&nbsp
+                        <a href="{{url()->previous()}}" class="btn btn-primary btn-sm"><i class="fas fa-arrow-left"></i> Go Back</a>
+                    </div>
                 </div>
 
                 <div class="card-body">
@@ -49,7 +60,7 @@
                             <label for="program_code" class="col-md-4 col-form-label text-md-end">{{ __('Program Code') }}</label>
 
                             <div class="col-md-6">
-                                <input id="program_code" type="text" class="form-control @error('program_code') is-invalid @enderror" name="program_code" value="{{ old('program_code') }}" required autocomplete="program_code" autofocus>
+                                <input id="program_code" type="text" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="4" class="form-control @error('program_code') is-invalid @enderror" name="program_code" value="{{ old('program_code') }}" required autocomplete="program_code" autofocus>
 
                                 @error('program_code')
                                     <span class="invalid-feedback" role="alert">
@@ -64,7 +75,7 @@
 
                             <div class="col-md-6">
                                 <select id="program_type" class="form-control @error('program_type') is-invalid @enderror" name="program_type" value="{{ old('program_type') }}" required autocomplete="program_type" autofocus>
-                                    <option>--SELECT--</option>
+                                    <option value="">--SELECT--</option>
                                     <option value="artisan">Artisan</option>
                                     <option value="certificate">Certificate</option>
                                     <option value="diploma">Diploma</option>
@@ -85,7 +96,7 @@
 
                             <div class="col-md-6">
                                 <select class="form-control @error('department_id') is-invalid @enderror" name="department_id" required>
-                                    <option>--SELECT--</option>
+                                    <option value="">--SELECT--</option>
                                     @foreach($departments as $department)
                                     <option value="{{ $department->department_id }}">{{$department->department_name}}</option>
                                     @endforeach

@@ -75,12 +75,7 @@
                             <div class="col-md-6">
                                 <input type="hidden" name="department_id" value="0">
                                 <select class="form-control @error('role_id') is-invalid @enderror" name="role_id" required>
-                                    <option>--SELECT--</option>
                                     <option value="1">Administrator</option>
-                                    <option value="2">Student</option>
-                                    <option value="3">Librarian</option>
-                                    <option value="4">Records Officer</option>
-                                    <option value="5">Registrar</option>
                                 </select>
                                 @error('role_id')
                                     <span class="invalid-feedback" role="alert">

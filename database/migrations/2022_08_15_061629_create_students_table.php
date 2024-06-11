@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('confirmed')->default('not confirmed');
             $table->foreignId('department_id')->constrained();
             $table->string('status_of_graduation')->default('not approved');
+            $table->string('gown_id')->default('0');
             $table->string('created_by')->default('0');
             $table->string('signed')->default('0');
             $table->string('password');

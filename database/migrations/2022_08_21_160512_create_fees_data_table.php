@@ -20,9 +20,7 @@ return new class extends Migration
             $table->string('reason');
             $table->string('bank');
             $table->string('code')->unique();
-            /* For Creating Current Timestamp */
             $table->timestamp('created_at')->useCurrent();
-            /* For Updating */
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }

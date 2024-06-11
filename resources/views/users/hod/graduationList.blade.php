@@ -117,11 +117,8 @@
                     </td>
                     <td scope="col-2"> 
                         <div class="d-flex justify-contents-center">
-                            <a href="{{route('users.hod.viewRemarks', ['department_id' => Auth::User()->department_id, 'student_id' => $student->student_id])}}" class="btn btn-info btn-sm">
-                                <i class="fas fa-commenting"></i>
-                            </a> &nbsp
                             <a href="{{url('viewStudent', $student->student_id)}}" class="btn btn-info btn-sm">
-                                <i class="fas fa-eye"></i>
+                                <i class="fas fa-eye"></i> View Record
                             </a>
                         </div>
                     </td>

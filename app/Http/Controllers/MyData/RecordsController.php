@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 use App\Models\Clearance;
 use App\Models\Student;
 use App\Models\Departments;
+use App\Models\Program;
+use App\Models\Certificates;
+use App\Models\Transcripts;
+use App\Models\FeesData;
 
 class RecordsController extends Controller
 {
@@ -16,9 +20,26 @@ class RecordsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function createTransView()
     {
         //
+        $departments = Departments::all();
+        $programs = Program::all();
+        $records = Student::all();
+        $transcripts = Transcripts::all();
+        $certificates = Certificates::all();
+        return view('users.records.createTrans', compact('departments','programs','records','transcripts','certificates'));
+    }
+
+    public function createCertView()
+    {
+        //
+        $departments = Departments::all();
+        $programs = Program::all();
+        $records = Student::all();
+        $transcripts = Transcripts::all();
+        $certificates = Certificates::all();
+        return view('users.records.createCert', compact('departments','programs','records','transcripts','certificates'));
     }
 
     /**
@@ -31,16 +52,40 @@ class RecordsController extends Controller
         //
     }
 
-    public function clearStudentRecordProcess()
+    public function clearStudentRecordProcess(Request $request)
     {
-        $clearanceRecords = Clearance::where('gown','picked')->pluck('email')->first();
         $records = Student::all();
         $departments = Departments::all();
-        return view('users.records.view',compact('records','clearanceRecords','departments'));
+        $transcripts = Transcripts::all();
+        $certificates = Certificates::all();
+        $clearances = Clearance::where('gown','picked')->get();
+        $emailCleared = Clearance::where('certTrans','picked')->get();
+        if($request->has('search')){
+            $records = Student::where('user_name','like', "%{$request->search}%")->orWhere('email','like', "%{$request->search}%")->get();
+        }
+        return view('users.records.view',compact('emailCleared','clearances','records','departments','transcripts','certificates'));
     }
 
-    public function editRecordRecordProcess(Student $user, $student_id)
+    public function clearStudRecordProc(Request $request, $email)
     {
+        $records = Student::all();
+        $departments = Departments::all();
+        $transcripts = Transcripts::all();
+        $certificates = Certificates::all();
+        $clearances = Clearance::where('gown','picked')->get();
+        if($request->has('clearStudentRecord'))
+        {
+            Clearance::where('email',$email)
+            ->update([
+                'certTrans' => 'picked'
+            ]);
+        return redirect()->back()->with('message','Student Cleared Successfully');
+        }
+    }
+
+    public function editRecordRecordProcess($student_id)
+    {
+        $user = Student::find($student_id);
         $departments = Departments::get();
         return view('users.records.edit', ['student_id'=>$student_id], compact('user','departments'));
     }
@@ -49,6 +94,16 @@ class RecordsController extends Controller
     {
         $departments = Departments::get();
         return view('users.records.index',  ['student_id'=>$student_id]);
+    }
+
+    public function feesViewShow()
+    {
+        $students=Student::all();
+        $departments=Departments::all();
+        $programs=Program::all();
+        $fees=FeesData::all()->sum('amount');
+        $feesData=FeesData::all();
+        return view('feesView',compact('feesData','students','departments','programs','fees'));
     }
 
     /**

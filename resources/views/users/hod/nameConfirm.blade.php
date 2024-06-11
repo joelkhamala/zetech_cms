@@ -29,10 +29,10 @@
                 <div class="row">
                     <div class="col-md-6 mb-2">
                         <i class="fas fa-thumbs-up"></i>
-                        &nbsp Confirmed Students for
+                        &nbsp Students who have confirmed Names
                         @foreach($departments as $department)
                         @if(Auth::User()->department_id == $department->department_id)
-                            {{ $department->department_name }}
+                            ({{ $department->department_name }})
                         @endif
                         @endforeach
                     </div>
@@ -63,6 +63,7 @@
                 <th scope="col">National ID</th>
                 <th scope="col">Program</th>
                 <th scope="col">Program Code</th>
+                <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -121,6 +122,20 @@
                                 </form>
                         </div>
                     </td> -->
+                    <td>
+                    @if($depClears->contains('email', $student->email))
+                            <button class="btn btn-info btn-sm"><i class="fas fa-check"></i> <span class="d-none d-lg-inline"> Student Cleared</span></button>
+                            @else
+                            <form method="POST" action="{{route('clearStudentDept', $student->student_id)}}">
+                                @csrf
+                                <input type="hidden" name="clear" value="cleared">
+                                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-check"></i> <span class="d-none d-lg-inline"> &nbspClear Student</span></button>
+                            </form>
+                            <!-- <a href="{{route('users.hod.viewRemarks', ['department_id' => Auth::User()->department_id, 'student_id' => $student->student_id])}}" class="btn btn-info btn-sm">
+                                <i class="fas fa-commenting"></i>
+                            </a> &nbsp -->
+                            @endif
+                    </td>
                 </tr>
                 @endif
                 @endforeach

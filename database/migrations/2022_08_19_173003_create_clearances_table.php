@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('email');
             $table->foreignId('department_id')->constrained();
             $table->foreignId('program_id')->constrained();
+            $table->string('department')->default('not cleared');
             $table->string('library')->default('not cleared');
             $table->string('finance')->default('not cleared');
             $table->string('gown')->default('not picked');

@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-@if(!empty(Auth::user()->user_name))
 <html lang="en">
 
 <head>
@@ -25,7 +24,7 @@
 </head>
 
 <body id="page-top">
-
+@if(!empty(Auth::user()->user_name))
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -67,8 +66,8 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Student List Details:</h6>
-                        <a class="collapse-item" href="{{url('/viewFinanceDetails')}}">View Students List</a>
+                        <h6 class="collapse-header"><i class="fas fa-list-check" style="margin-left:-10px"></i>&nbsp Student List Details:</h6>
+                        <a class="collapse-item" href="{{url('/viewFinanceDetails')}}"><i class="fas fa-list-alt" style="margin-left:-10px"></i>&nbsp View Students List</a>
                     </div>
                 </div>
             </li>
@@ -122,15 +121,6 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
@@ -205,16 +195,26 @@
     </div>
 
     <script type="text/javascript">
-        $(document).ready(function() {
-    $('#table').DataTable(
+//         $(document).ready(function() {
+//     $('#table').DataTable(
         
-         {     
+//          {     
 
-      "aLengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
-        "iDisplayLength": 5
-       } 
-        );
-} );
+//       "aLengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+//         "iDisplayLength": 5
+//        } 
+//         );
+// } );
+
+
+window.addEventListener('DOMContentLoaded', event => {
+    // Simple-DataTables
+
+    const datatablesSimple = document.getElementById('table');
+    if (datatablesSimple) {
+        new simpleDatatables.DataTable(datatablesSimple);
+    }
+});
 
 
 function checkAll(bx) {
@@ -237,8 +237,9 @@ function checkAll(bx) {
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="js/datatables-simple-demo.js"></script>
 <!-- css --> 
 
     <!-- Core plugin JavaScript-->
@@ -252,23 +253,12 @@ function checkAll(bx) {
     <!-- Page level custom scripts -->
     <script src="{{url('js/chart-area-demo.js')}}"></script>
     <script src="{{url('js/chart-pie-demo.js')}}"></script>
-
+@else
+    <script>
+    alert("Please Login to access the System");
+    window.location.href="/zetech_cms/public/roLogin";
+    </script>
+@endif
 </body>
 
 </html>
-
-@else
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card alert alert-warning">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    Please login to access the system
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endif

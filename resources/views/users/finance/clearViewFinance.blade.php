@@ -3,7 +3,34 @@
 @section('content')
 
 <div class="container-fluid mb-4">
+    <div class="mx-auto justify-content-center col-md-6 text-center" id="mydiv">
+        <div>
+            @if(session()->has('message'))
+            {{$errclass=''}}
+            <span style="display:none">
+                @if(str_contains(session('message'), 'no'))
+                {{ $errclass='alert-danger'}}
+                @else
+                {{ $errclass='alert-success'}}
+                @endif
+            </span>
+                <div class="alert {{$errclass}} alert-dismissible fade show mb-2" role="alert"  id="mydiv">
+                    {{ session('message') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+        </div>
+    </div>
     <div class="row">
+       <div class="float-left col-md-5">
+        <h3>Students Payment Details</h3>
+    </div>
+    <div class="col-md-5"></div>
+    <div class="float-right col-md-2">
+       <a href="{{url('viewFinanceDetails')}}" class=" btn btn-primary btn-sm"><i class="fas fa-arrow-left"></i> <span class="d-none d-lg-inline">Back</span></a>
+    </div>
         <div class="col-md-12 mt-4">
            <div class="card shadow-sm">
             <div class="text-center mt-2"><h4>Student Fee Payment Details</h4></div>

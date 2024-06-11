@@ -4,14 +4,23 @@
 <!-- Dropdown - Messages -->
 
 <!-- Page Heading -->
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
+<div class="d-sm-flex align-items-center justify-content-between">
     <h1 class="h3 mb-0 text-gray-800">Registered Users</h1>
 </div>
 <div class="row mb-4">
-    <div class="m-2 justify-content-center">
+    <div class=" container-fluid">
+    <div class="mx-auto mb-4 justify-content-center col-md-6 text-center" id="mydiv">
         <div>
             @if(session()->has('message'))
-                <div class="alert alert-success alert-dismissible fade show mb-2" role="alert">
+            {{$errclass=''}}
+            <span style="display:none">
+                @if(str_contains(session('message'), 'are'))
+                {{ $errclass='alert-danger'}}
+                @else
+                {{ $errclass='alert-success'}}
+                @endif
+            </span>
+                <div class="alert {{$errclass}} alert-dismissible fade show mb-2" role="alert"  id="mydiv">
                     {{ session('message') }}
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -20,7 +29,13 @@
             @endif
         </div>
     </div>
-    <div class=" container-fluid">
+
+    <script>
+        $(document).ready(function(){
+        $("#mydiv").fadeIn(500);
+        $("#mydiv").fadeOut(5000);
+    });
+    </script>
         <div class="card mx-auto">
             <div class="card-header">
                 <div class="row">

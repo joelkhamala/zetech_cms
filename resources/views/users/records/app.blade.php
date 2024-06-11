@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-@if(!empty(Auth::user()->user_name))
 <html lang="en">
 
 <head>
@@ -25,7 +24,7 @@
 </head>
 
 <body id="page-top">
-
+@if(!empty(Auth::user()->user_name))
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -33,7 +32,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url('/hodHome')}}">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url('/roHome')}}">
                 <div class="sidebar-brand-icon">
                     <img src="{{url('images/logo.jpg')}}" width="50px" height="50px">
                 </div>
@@ -45,7 +44,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="{{url('/hodHome')}}">
+                <a class="nav-link" href="{{url('/roHome')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -57,6 +56,19 @@
             <div class="sidebar-heading">
                 Department Data
             </div>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCertTrans"
+                aria-expanded="true" aria-controls="collapseCertTrans">
+                    <i class="fas fa-list-ol"></i>
+                    <span>Add/View Documents</span>
+                </a>
+                <div id="collapseCertTrans" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header"><i class="fas fa-plus-square" style="margin-left:-10px"></i>&nbsp Records:</h6>
+                        <a class="collapse-item" href="{{url('/createTrans')}}"><i class="fas fa-file" style="margin-left:-10px"></i>&nbsp Add/View Transcripts</a>
+                        <a class="collapse-item" href="{{url('/createCert')}}"><i class="fas fa-file-text" style="margin-left:-10px"></i>&nbsp Add/View Certificates</a>
+                </div>
+            </li>
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
@@ -67,11 +79,12 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Senate List Details:</h6>
-                        <a class="collapse-item" href="{{url('/clearStudentRecord')}}">Clear Students</a>
+                        <h6 class="collapse-header"><i class="fas fa-list-ol" style="margin-left:-10px"></i>&nbsp Senate List Details:</h6>
+                        <a class="collapse-item" href="{{url('/clearStudentRecord')}}"><i class="fas fa-eraser" style="margin-left:-10px"></i>&nbsp Clear Students</a>
                     </div>
                 </div>
             </li>
+            
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -204,17 +217,28 @@
         </div>
     </div>
 
+  
     <script type="text/javascript">
-        $(document).ready(function() {
-    $('#table').DataTable(
+//         $(document).ready(function() {
+//     $('#table').DataTable(
         
-         {     
+//          {     
 
-      "aLengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
-        "iDisplayLength": 5
-       } 
-        );
-} );
+//       "aLengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+//         "iDisplayLength": 5
+//        } 
+//         );
+// } );
+
+
+window.addEventListener('DOMContentLoaded', event => {
+    // Simple-DataTables
+
+    const datatablesSimple = document.getElementById('table');
+    if (datatablesSimple) {
+        new simpleDatatables.DataTable(datatablesSimple);
+    }
+});
 
 
 function checkAll(bx) {
@@ -237,8 +261,9 @@ function checkAll(bx) {
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="js/datatables-simple-demo.js"></script>
 <!-- css --> 
 
     <!-- Core plugin JavaScript-->
@@ -252,23 +277,12 @@ function checkAll(bx) {
     <!-- Page level custom scripts -->
     <script src="{{url('js/chart-area-demo.js')}}"></script>
     <script src="{{url('js/chart-pie-demo.js')}}"></script>
-
+@else
+    <script>
+    alert("Please Login to access the System");
+    window.location.href="/zetech_cms/public/roLogin";
+    </script>
+@endif
 </body>
 
 </html>
-
-@else
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card alert alert-warning">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    Please login to access the system
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endif

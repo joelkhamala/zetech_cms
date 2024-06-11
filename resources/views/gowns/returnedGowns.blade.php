@@ -73,7 +73,7 @@
                     <td>{{ucwords($gown->picked)}}</td>
                     <td>{{ucwords($gown->returned)}}</td>
                     <td>
-                        @if($gown->picked == 'picked')
+                        @if($gown->returned == 'not returned')
                         <div class="btn btn-danger btn-sm"><i class="fas fa-times"></i> &nbspNot Available</div>
                         @else
                         <div class="btn btn-success btn-sm"><i class="fas fa-check"></i> &nbspAvailable</div>
@@ -83,7 +83,7 @@
                 @endforeach
                 @if($gowns->isEmpty())
                     <tr>
-                        <td colspan="7"><div class="alert alert-danger">Records for Gowns Not Found</div></td>
+                        <td colspan="8"><div class="alert alert-danger">Records for Gowns Not Found</div></td>
                     </tr>
                 @endif
             </tbody>

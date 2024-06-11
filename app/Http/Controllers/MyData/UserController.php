@@ -7,6 +7,7 @@ use App\Models\Messages;
 use App\Models\Departments;
 use App\Models\Roles;
 use App\Models\Program;
+use App\Models\Student;
 
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
@@ -14,6 +15,8 @@ use App\Http\Requests\UserUpdateRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -75,7 +78,14 @@ class UserController extends Controller
 
         // $user->save();
 
-        //Save user data
+        $users = User::where('role_id', $request->role_id)->where('department_id', $request->department_id)->get();
+        if($users->count()>0)
+        {
+            return redirect()->route('users.create')->with('message', 'User not added. A User with the same role in that department already exists');
+        }
+        else
+        {
+            //Save user data
             User::create([
                 'user_name' => $request->user_name,
                 'first_name' => $request->first_name,
@@ -87,6 +97,7 @@ class UserController extends Controller
             ]);
 
             return redirect()->route('users.create')->with('message', 'User Successfully Created');
+        }
     }
 
     /**
@@ -176,11 +187,9 @@ class UserController extends Controller
 
     public function perform()
     {
-        Session::flush();
-        
+        session()->flush();
         Auth::logout();
-
-        return redirect('login');
+        return redirect()->route('login');
     }
 
     /**

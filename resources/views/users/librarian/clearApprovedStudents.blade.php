@@ -61,6 +61,7 @@
             </thead>
             <tbody>
                 @foreach($students as $student)
+                @if($depClears->contains('email', $student->email))
                 <tr>
                     <th scope="row">{{$student->student_id}}</th>
                     <td>{{$student->first_name}}</td>
@@ -84,14 +85,27 @@
                     
                     <td scope="col-2"> 
                         <div class="d-flex juustify-contents-center">
+                            @if($clearEmail->contains('email',$student->email))
+                            @foreach($clearEmail as $myEmail)
+                            @if($myEmail->email == $student->email)
+                            <div class="btn btn-success btn-sm">
+                                <i class="fas fa-check"></i> &nbspStudent Cleared
+                            </div>
+                            @else
+                            @continue
+                            @endif
+                            @endforeach
+                            @else
                             <a href="{{url('clearStudentLibrary', $student->student_id)}}" class="btn btn-info btn-sm">
-                                <i class="fas fa-check"></i> &nbsp Clear Student
+                                <i class="fas fa-check"></i> &nbspClear Student
                             </a>
+                            @endif
                         </div>
                     </td>
                 </tr>
+                @endif
                 @endforeach
-                @if($students->isEmpty())
+                @if($depClears->isEmpty())
                     <tr>
                         <td colspan="11"><div class="alert alert-danger">Student Records Not Found</div></td>
                     </tr>

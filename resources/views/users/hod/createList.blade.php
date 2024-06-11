@@ -188,7 +188,7 @@
                             <label for="yearOfAdmission" class="col-form-label text-md-end">{{ __('Year of Admission') }}</label>
 
                             <div class="">
-                                <input type="date" class="form-control @error('yearOfAdmission') is-invalid @enderror" name="yearOfAdmission" value="{{ old('yearOfAdmission') }}" required>
+                                <input type="date" class="form-control @error('yearOfAdmission') is-invalid @enderror" name="yearOfAdmission" value="{{ old('yearOfAdmission') }}"  min="2012-01-01" max="2022-12-31" required>
                                     
                                 @error('yearOfAdmission')
                                     <span class="invalid-feedback" role="alert">

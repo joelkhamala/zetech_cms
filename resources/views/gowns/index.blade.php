@@ -25,11 +25,11 @@
         <div class="card mx-auto">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-md-7">
+                    <div class="col-md-6">
                         <i class="fas fa-graduation-cap"></i>
                         &nbsp Gowns in Store
                     </div>
-                    <div class="col-md-5 d-flex align-items-center justify-content-center">
+                    <div class="col-md-6 d-flex align-items-center justify-content-center">
                         <form method="GET" action="{{route('gowns.index')}}" class="form-inline">
                             @csrf
                             <div class="form-group mx-sm-3 mb-2">

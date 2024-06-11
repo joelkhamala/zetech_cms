@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-@if(!empty(Auth::user()->email))
 <html lang="en">
 
 <head>
@@ -25,7 +24,7 @@
 </head>
 
 <body id="page-top">
-
+@if(!empty(Auth::user()->email))
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -106,7 +105,7 @@
             </li> -->
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGown"
                 aria-expanded="true" aria-controls="collapseGown">
                     <i class="fas fa-graduation-cap"></i>
@@ -118,7 +117,7 @@
                         <a class="collapse-item" href="{{url('/gownStatus')}}">Gown Status</a>
                     </div>
                 </div>
-            </li>
+            </li> -->
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -378,13 +377,11 @@ function checkAll(bx) {
     <!-- Page level custom scripts -->
     <script src="{{url('js/chart-area-demo.js')}}"></script>
     <script src="{{url('js/chart-pie-demo.js')}}"></script>
-</body>
-
-</html>
-
 @else
-<script>
-    alert('Please login to access the system');
-    history.back();
-</script>
+    <script>
+    alert("Please Login to access the System");
+    window.location.href="/zetech_cms/public/studentLogin";
+    </script>
 @endif
+</body>
+</html>

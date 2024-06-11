@@ -24,21 +24,29 @@
 <!-- Page Heading -->
 @foreach($students as $student)
 @if(Auth::User()->email == $student->email)
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
+<div class="d-sm-flex align-items-center justify-content-between">
    <h1 class="h3 mb-0 text-gray-800">Student Dashboard</h1>
 </div>
-<div class="col-md-8 text-center">
-   @if(session()->has('message'))
-   <div class="container">
-      <div class="alert alert-success alert-dismissible fade show mb-2" role="alert">
-         {{ session('message') }}
-         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-         <span aria-hidden="true">&times;</span>
-         </button>
-      </div>
-   </div>
-   @endif
-</div>
+<div class="mx-auto mb-4 justify-content-center col-md-6 text-center" id="mydiv">
+        <div>
+            @if(session()->has('message'))
+            {{$errclass=''}}
+            <span style="display:none">
+                @if(str_contains(session('message'), 'no'))
+                {{ $errclass='alert-danger'}}
+                @else
+                {{ $errclass='alert-success'}}
+                @endif
+            </span>
+                <div class="alert {{$errclass}} alert-dismissible fade show mb-2" role="alert"  id="mydiv">
+                    {{ session('message') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+        </div>
+    </div>
 <!-- Content Row -->
 <div class="row">
    <!-- Fees Paid  -->
@@ -48,20 +56,18 @@
             <div class="row no-gutters align-items-center">
                <div class="col mr-2">
                   <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                     Departments Cleared
+                     Tuition Fees Balance
                   </div>
                   <div class="h5 mb-0 font-weight-bold text-gray-800">
-                     @foreach($clearances as $clearance)
-                     @if($clearances->contains(Auth::User()->email) && $clearances->contains('cleared') && $clearance->email == Auth::User()->email)
-                     {{ $clearances->count()}}
-                     @else
-                     0
-                     @endif
+                     @foreach($finances as $finance)
+                        @if($finances->contains('email',Auth::User()->email) && Auth::User()->email == $finance->email)
+                        Kshs. {{number_format($finance->school_fees)}}
+                        @endif
                      @endforeach
                   </div>
                </div>
                <div class="col-auto">
-                  <i class="fas fa-check fa-2x text-gray-300"></i>
+                  <i class="fas fa-usd fa-2x text-gray-300"></i>
                </div>
             </div>
          </div>
@@ -74,14 +80,18 @@
             <div class="row no-gutters align-items-center">
                <div class="col mr-2">
                   <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                     Departments Remaining
+                     Graduation Fee Balance
                   </div>
                   <div class="h5 mb-0 font-weight-bold text-gray-800">
-                     7
+                     @foreach($finances as $finance)
+                        @if($finances->contains('email',Auth::User()->email) && Auth::User()->email == $finance->email)
+                        Kshs. {{number_format($finance->gown_fees)}}
+                        @endif
+                     @endforeach
                   </div>
                </div>
                <div class="col-auto">
-                  <i class="fas fa-times fa-2x text-gray-300"></i>
+                  <i class="fas fa-graduation-cap fa-2x text-gray-300"></i>
                </div>
             </div>
          </div>
@@ -94,10 +104,14 @@
             <div class="row no-gutters align-items-center">
                <div class="col mr-2">
                   <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                     Graduation Fee Balance
+                     Total Fee Balance
                   </div>
                   <div class="h5 mb-0 font-weight-bold text-gray-800">
-                     Kshs. 5,000
+                     @foreach($finances as $finance)
+                        @if($finances->contains('email',Auth::User()->email) && Auth::User()->email == $finance->email)
+                        Kshs. {{number_format($finance->school_fees + $finance->gown_fees)}}
+                        @endif
+                     @endforeach
                   </div>
                </div>
                <div class="col-auto">
